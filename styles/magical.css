@@ -1,0 +1,31 @@
+/* ── Magical atmosphere animations ──────────────────────────────────────────── */
+
+/* Floating dust motes */
+@keyframes dustFloat {
+  0%   { transform: translateY(0)      translateX(0px);   opacity: 0;    }
+  12%  { opacity: 0.5; }
+  88%  { opacity: 0.22; }
+  100% { transform: translateY(-110vh) translateX(30px);  opacity: 0;    }
+}
+
+/* Torch / candlelight glow waver */
+@keyframes torchWaver {
+  0%   { opacity: 0.55; transform: scale(1)    scaleX(1);    }
+  18%  { opacity: 0.72; transform: scale(1.05) scaleX(0.97); }
+  36%  { opacity: 0.58; transform: scale(0.96) scaleX(1.04); }
+  55%  { opacity: 0.80; transform: scale(1.07) scaleX(0.95); }
+  73%  { opacity: 0.60; transform: scale(0.97) scaleX(1.02); }
+  100% { opacity: 0.62; transform: scale(1.02) scaleX(0.99); }
+}
+
+/* Gentle ambient pulse (used on glow blobs) */
+@keyframes ambientPulse {
+  0%, 100% { opacity: 0.06; }
+  50%       { opacity: 0.11; }
+}
+
+/* Subtle global warm pulse on edges */
+@keyframes edgeGlow {
+  0%, 100% { opacity: 0.18; }
+  50%       { opacity: 0.28; }
+}
