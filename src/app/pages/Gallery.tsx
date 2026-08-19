@@ -306,23 +306,16 @@ export default function Gallery() {
             >
               MOMENTS
             </h1>
-            <p className="font-['Inter'] text-neutral-400 max-w-2xl leading-relaxed mb-2">
+            <p className="font-['Inter'] text-neutral-400 max-w-2xl leading-relaxed mb-8">
               Behind the scenes moments from studio sessions, live performances, and collaborations.
             </p>
-            {/* Atmospheric subtitle */}
-            <p
-              className="font-['Inter'] text-[11px] tracking-[2.5px] uppercase mb-10"
-              style={{ color: "rgba(212,175,55,0.45)" }}
-            >
-              Portrait Corridor
-            </p>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-nowrap overflow-x-auto gap-3 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               {CATEGORIES.map(category => (
                 <button
                   key={category}
                   onClick={() => setActiveCategory(category)}
-                  className={`px-4 py-2 rounded-full font-['Inter'] text-sm transition-colors ${
+                  className={`shrink-0 px-4 py-2 rounded-full font-['Inter'] text-sm transition-colors ${
                     activeCategory === category
                       ? "bg-white text-black"
                       : "bg-[#1a1a1a] text-neutral-400 hover:bg-[#2a2a2a] hover:text-white border border-[#3b3b3b]"
