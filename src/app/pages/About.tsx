@@ -18,7 +18,7 @@ export default function About() {
         {/* Title pinned to bottom of hero */}
         <div className="absolute bottom-10 md:bottom-14 left-[20px] md:left-[35px] right-[20px] md:right-[35px] max-w-[1440px] mx-auto">
           <h1
-            className="font-['Jaro'] text-white text-[52px] md:text-[80px] leading-[0.85]"
+            className="font-['Jaro'] text-white text-[40px] md:text-[64px] leading-[0.8]"
             style={{ fontVariationSettings: "'opsz' 6" }}
           >
             THE STORY

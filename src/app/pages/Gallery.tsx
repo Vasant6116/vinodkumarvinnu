@@ -301,7 +301,7 @@ export default function Gallery() {
           {/* Header */}
           <div className="mb-14">
             <h1
-              className="font-['Jaro'] text-white text-[64px] leading-[0.8] mb-4"
+              className="font-['Jaro'] text-white text-[40px] md:text-[64px] leading-[0.8] mb-4"
               style={{ fontVariationSettings: "'opsz' 6" }}
             >
               MOMENTS

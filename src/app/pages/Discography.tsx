@@ -397,22 +397,22 @@ export default function Discography() {
     : releases.filter(r => r.categories?.includes(activeCategory));
 
   return (
-    <div className="pt-[140px] pb-20 px-[35px] min-h-screen">
+    <div className="pt-[100px] md:pt-[140px] pb-12 md:pb-20 px-3 md:px-[35px] min-h-screen">
       <div className="max-w-[1440px] mx-auto">
         <div className="mb-12">
-          <h1 className="font-['Jaro'] text-white text-[64px] leading-[0.8] mb-6" style={{ fontVariationSettings: "'opsz' 6" }}>
+          <h1 className="font-['Jaro'] text-white text-[40px] md:text-[64px] leading-[0.8] mb-6" style={{ fontVariationSettings: "'opsz' 6" }}>
             DISCOGRAPHY
           </h1>
           <p className="font-['Inter'] text-neutral-400 max-w-2xl leading-relaxed mb-8">
             Complete collection of music releases and soundtracks. Browse by category to explore different facets of Vinnu's compositions.
           </p>
 
-          <div className="flex flex-wrap gap-3 mb-12">
+          <div className="flex flex-nowrap overflow-x-auto gap-3 mb-12 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {CATEGORIES.map(category => (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-4 py-2 rounded-full font-['Inter'] text-sm transition-colors ${
+                className={`shrink-0 px-4 py-2 rounded-full font-['Inter'] text-sm transition-colors ${
                   activeCategory === category
                     ? 'bg-white text-black'
                     : 'bg-[#1a1a1a] text-neutral-400 hover:bg-[#2a2a2a] hover:text-white border border-[#3b3b3b]'
