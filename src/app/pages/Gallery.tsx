@@ -1,6 +1,6 @@
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const CATEGORIES = [
   "All",
@@ -211,6 +211,7 @@ export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState("All");
   const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const touchStartX = useRef<number | null>(null);
 
   const allImages = [
     { id: 1, title: "Studio Recording Session", category: "Recording sessions", description: "Composing the score for O Saathiya", image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZWNvcmRpbmclMjBzdHVkaW98ZW58MXx8fHwxNzY0NzU2NjgzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
@@ -240,6 +241,19 @@ export default function Gallery() {
     const currentIndex = images.findIndex(img => img.id === selectedImage);
     const nextIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
     setSelectedImage(images[nextIndex].id);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.changedTouches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(dx) < 50) return;
+    if (dx < 0) handleNext();
+    else handlePrevious();
   };
 
   // Keyboard navigation for lightbox
@@ -404,48 +418,66 @@ export default function Gallery() {
 
           <button
             onClick={() => setSelectedImage(null)}
-            className="absolute top-6 right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10"
+            className="absolute top-4 right-4 md:top-6 md:right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-20"
           >
             <X className="w-6 h-6 text-white" />
           </button>
 
+          {/* Desktop side arrows — kept off the photo so they do not squeeze it */}
           <button
             onClick={handlePrevious}
-            className="absolute left-6 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10"
+            className="hidden md:flex absolute left-6 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10"
           >
             <ChevronLeft className="w-6 h-6 text-white" />
           </button>
 
           <button
             onClick={handleNext}
-            className="absolute right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10"
+            className="hidden md:flex absolute right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10"
           >
             <ChevronRight className="w-6 h-6 text-white" />
           </button>
 
-          <div className="max-w-6xl max-h-[85vh] mx-auto px-20 relative z-10">
-            <div className="relative">
-              {/* Lightbox portrait frame */}
+          <div className="w-full md:max-w-6xl md:max-h-[85vh] mx-auto px-3 md:px-20 relative z-10">
+            <div
+              className="relative"
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+            >
+              {/* Lightbox portrait frame — gold frame hidden below md */}
               <div
-                style={{
-                  padding: "3px",
-                  background:
-                    "linear-gradient(135deg, #2e1d00 0%, #b8891a 18%, #d4af37 32%, #f0d060 50%, #d4af37 68%, #b8891a 82%, #2e1d00 100%)",
-                  boxShadow:
-                    "0 0 0 1px rgba(20,12,0,0.9), 0 40px 120px rgba(0,0,0,0.98), 0 0 80px rgba(212,175,55,0.12)",
-                }}
+                className="relative w-full max-w-[95vw] sm:max-w-md md:max-w-none mx-auto p-0 md:p-[3px] bg-transparent md:[background:linear-gradient(135deg,#2e1d00_0%,#b8891a_18%,#d4af37_32%,#f0d060_50%,#d4af37_68%,#b8891a_82%,#2e1d00_100%)] md:shadow-[0_0_0_1px_rgba(20,12,0,0.9),0_40px_120px_rgba(0,0,0,0.98),0_0_80px_rgba(212,175,55,0.12)]"
               >
-                <div style={{ background: "#090603", padding: "8px", boxShadow: "inset 0 0 20px rgba(0,0,0,0.95)" }}>
+                <div className="p-0 md:p-2 bg-transparent md:bg-[#090603] md:shadow-[inset_0_0_20px_rgba(0,0,0,0.95)]">
                   <img
                     src={selectedImageData.image}
                     alt={selectedImageData.title}
-                    className="w-full h-auto max-h-[68vh] object-contain"
+                    className="w-full max-w-[95vw] sm:max-w-md md:max-w-none mx-auto aspect-auto object-contain h-auto max-h-[62vh] md:max-h-[68vh]"
+                    draggable={false}
                   />
                 </div>
+
+                {/* Mobile overlay arrows — float on the image, no layout squeeze */}
+                <button
+                  type="button"
+                  onClick={handlePrevious}
+                  className="md:hidden absolute left-2 top-1/2 -translate-y-1/2 p-2.5 bg-black/50 hover:bg-black/70 rounded-full transition-colors z-10"
+                  aria-label="Previous photo"
+                >
+                  <ChevronLeft className="w-5 h-5 text-white" />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  className="md:hidden absolute right-2 top-1/2 -translate-y-1/2 p-2.5 bg-black/50 hover:bg-black/70 rounded-full transition-colors z-10"
+                  aria-label="Next photo"
+                >
+                  <ChevronRight className="w-5 h-5 text-white" />
+                </button>
               </div>
 
               {/* Caption / nameplate */}
-              <div className="mt-5 flex flex-col items-center gap-2">
+              <div className="mt-4 md:mt-5 flex flex-col items-center text-center gap-2 px-2">
                 <div
                   style={{
                     background:
