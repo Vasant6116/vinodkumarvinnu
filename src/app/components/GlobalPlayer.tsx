@@ -11,13 +11,12 @@ export function GlobalPlayer() {
       className="fixed bottom-0 left-0 right-0 z-50"
       style={{ background: "#0a0a0a", borderTop: "1px solid rgba(255,255,255,0.1)" }}
     >
-      {/* Changed bg-[#282a2c] to bg-[#121212] to create a clean contrast with the native player */}
-      <div className="flex items-center bg-[#121212]" style={{ height: "72px" }}>
+      <div className="flex items-center justify-between bg-[#121212] px-2 md:px-0" style={{ height: "72px" }}>
 
-        {/* Left: album art + song info */}
-        <div className="flex items-center gap-3 px-4 shrink-0" style={{ width: "260px" }}>
+        {/* Left: album art + song info (Responsive width applied here) */}
+        <div className="flex items-center gap-2 md:gap-3 md:px-4 shrink-0 w-[130px] sm:w-[180px] md:w-[260px]">
           {nowPlaying.albumArt && (
-            <div className="shrink-0 rounded overflow-hidden" style={{ width: "44px", height: "44px" }}>
+            <div className="shrink-0 rounded overflow-hidden size-9 md:size-11">
               <ImageWithFallback
                 src={nowPlaying.albumArt}
                 alt={nowPlaying.name}
@@ -27,13 +26,13 @@ export function GlobalPlayer() {
           )}
           <div className="min-w-0">
             <p
-              className="text-[13px] font-semibold text-white truncate leading-tight"
+              className="text-[12px] md:text-[13px] font-semibold text-white truncate leading-tight"
               style={{ fontFamily: "Inter, sans-serif" }}
             >
               {nowPlaying.name}
             </p>
             <p
-              className="text-[11px] truncate leading-tight mt-[2px]"
+              className="text-[10px] md:text-[11px] truncate leading-tight mt-[2px]"
               style={{ fontFamily: "Inter, sans-serif", color: "#737373" }}
             >
               {nowPlaying.singer}
@@ -42,10 +41,7 @@ export function GlobalPlayer() {
         </div>
 
         {/* Center: Native HTML5 Audio Player */}
-        <div
-          className="flex-1 flex items-center px-4"
-          style={{ height: "72px" }}
-        >
+        <div className="flex-1 flex items-center px-1 md:px-4" style={{ height: "72px" }}>
           <audio
             key={nowPlaying.audioUrl}
             src={nowPlaying.audioUrl}
@@ -54,20 +50,20 @@ export function GlobalPlayer() {
             controlsList="nodownload"
             style={{
               width: "100%",
-              height: "44px",
+              height: "40px",
               outline: "none",
               colorScheme: "dark",
-              backgroundColor: "transparent" // Removes the forced bounding box background
+              backgroundColor: "transparent" 
             }}
             title={nowPlaying.name}
           />
         </div>
 
         {/* Right: close button */}
-        <div className="shrink-0 px-4">
+        <div className="shrink-0 pl-1 pr-2 md:px-4">
           <button
             onClick={() => setNowPlaying(null)}
-            className="text-[#555] hover:text-white transition-colors"
+            className="text-[#555] hover:text-white transition-colors p-2"
             style={{ fontSize: "18px", lineHeight: 1 }}
             aria-label="Close player"
             title="Close player"
