@@ -57,6 +57,8 @@ export function GlobalPlayer() {
               height: "44px",
               outline: "none",
               borderRadius: "22px",
+              colorScheme: "dark",          /* Forces dark mode controls */
+              backgroundColor: "#282a2c"    /* Blends with the container background */
             }}
             title={nowPlaying.name}
           />
