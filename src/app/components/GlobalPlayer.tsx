@@ -11,8 +11,8 @@ export function GlobalPlayer() {
       className="fixed bottom-0 left-0 right-0 z-50"
       style={{ background: "#0a0a0a", borderTop: "1px solid rgba(255,255,255,0.1)" }}
     >
-      {/* Single row: thumbnail + info LEFT | native audio player CENTER | close RIGHT */}
-      <div className="flex items-center bg-[#282a2c]" style={{ height: "72px" }}>
+      {/* Changed bg-[#282a2c] to bg-[#121212] to create a clean contrast with the native player */}
+      <div className="flex items-center bg-[#121212]" style={{ height: "72px" }}>
 
         {/* Left: album art + song info */}
         <div className="flex items-center gap-3 px-4 shrink-0" style={{ width: "260px" }}>
@@ -56,9 +56,8 @@ export function GlobalPlayer() {
               width: "100%",
               height: "44px",
               outline: "none",
-              borderRadius: "22px",
-              colorScheme: "dark",          /* Forces dark mode controls */
-              backgroundColor: "#282a2c"    /* Blends with the container background */
+              colorScheme: "dark",
+              backgroundColor: "transparent" // Removes the forced bounding box background
             }}
             title={nowPlaying.name}
           />
