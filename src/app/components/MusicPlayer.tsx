@@ -6,7 +6,7 @@ interface Song {
   name: string;
   singer: string;
   lyrics?: string;
-  driveId?: string;
+  audioUrl?: string;
 }
 
 interface MusicPlayerProps {
@@ -28,12 +28,12 @@ export function MusicPlayer({ songs, albumTitle, albumYear, albumType, albumArt,
 
   const handleSongClick = (i: number) => {
     const song = songs[i];
-    if (!song.driveId) return;
+    if (!song.audioUrl) return;
     setCurrentIndex(i);
     setNowPlaying({
       name: song.name,
       singer: song.singer,
-      driveId: song.driveId,
+      audioUrl: song.audioUrl,
       albumArt,
     });
   };
@@ -140,8 +140,8 @@ export function MusicPlayer({ songs, albumTitle, albumYear, albumType, albumArt,
       {/* ── Track rows ───────────────────────────────────── */}
       <div className="px-1 md:px-3 pb-4">
         {songs.map((song, i) => {
-          const isActive = nowPlaying?.driveId === song.driveId && !!song.driveId;
-          const hasAudio = !!song.driveId;
+          const isActive = nowPlaying?.audioUrl === song.audioUrl && !!song.audioUrl;
+          const hasAudio = !!song.audioUrl;
           return (
             <button
               key={i}

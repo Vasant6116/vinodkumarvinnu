@@ -11,7 +11,7 @@ export function GlobalPlayer() {
       className="fixed bottom-0 left-0 right-0 z-50"
       style={{ background: "#0a0a0a", borderTop: "1px solid rgba(255,255,255,0.1)" }}
     >
-      {/* Single row: thumbnail + info LEFT | iframe spectrum CENTER | close RIGHT */}
+      {/* Single row: thumbnail + info LEFT | native audio player CENTER | close RIGHT */}
       <div className="flex items-center bg-[#282a2c]" style={{ height: "72px" }}>
 
         {/* Left: album art + song info */}
@@ -41,26 +41,23 @@ export function GlobalPlayer() {
           </div>
         </div>
 
-        {/* Center: iframe cropped — hide title bar (top) and volume (bottom) */}
+        {/* Center: Native HTML5 Audio Player */}
         <div
-          className="flex-1 overflow-hidden"
-          style={{ background: "#282A2C", height: "72px" }}
-          
+          className="flex-1 flex items-center px-4"
+          style={{ height: "72px" }}
         >
-          <iframe
-            key={nowPlaying.driveId}
-            src={`https://drive.google.com/file/d/${nowPlaying.driveId}/preview`}
-            width="100%"
-            height="300"
-            allow="autoplay"
+          <audio
+            key={nowPlaying.audioUrl}
+            src={nowPlaying.audioUrl}
+            autoPlay
+            controls
+            controlsList="nodownload"
             style={{
-              border: "none",
-              display: "block",
-              margin: 0,
-              marginTop: "-85px",
-              background: "#000000",
-              colorScheme: "dark",
-            } as React.CSSProperties}
+              width: "100%",
+              height: "44px",
+              outline: "none",
+              borderRadius: "22px",
+            }}
             title={nowPlaying.name}
           />
         </div>

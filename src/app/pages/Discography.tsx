@@ -45,7 +45,7 @@ interface Release {
   platform?: string;
   description?: string;
   director?: string;
-  songs?: { name: string; singer?: string; lyrics?: string; driveId?: string }[];
+  songs?: { name: string; singer?: string; lyrics?: string; audioUrl?: string; }[];
   image: string;
   storyDetails?: StoryDetails;
 }
@@ -212,8 +212,8 @@ export default function Discography() {
       categories: ["Albums", "Melody Songs"],
       platform: "Amazon Prime",
       songs: [
-        { name: "O Saathiya", lyrics: "Bhaskarabatla", singer: "Javed Ali", driveId: "1c0hLFMSgCb1DVBGAfPWp_IWsLuP3h4bo" },
-        { name: "Vellipoye", lyrics: "Bhaskarabatla", singer: "Rahul Sipligunj", driveId: "1vTN77E8i07CmmFkthXLXQshuFbePyVwV" },
+        { name: "O Saathiya", lyrics: "Bhaskarabhatla", singer: "Javed Ali", audioUrl: "https://pub-9f3ae5efd092437c9cba3d2e18a5a9a5.r2.dev/O%20Saathiya/O%20Saathiya%20Video%20Song%20%20O%20Saathiya%20%20Javed%20Ali%20%20Raghu%20Master%20%20Aryan%20Gowra%20%20Vinnu%20-%20Junglee%20Music%20Telugu.mp3" },
+        { name: "Vellipoye", lyrics: "Bhaskarabatla", singer: "Rahul Sipligunj", audioUrl: "https://pub-9f3ae5efd092437c9cba3d2e18a5a9a5.r2.dev/O%20Saathiya/Vellipoye%20Lyrical%20Video%204k%20%20O%20Saathiya%20Aryan%20Gowra%20%20Mishti%20Chakravarthy%20%20Vinnu%20%20Rahul%20Sipligunj%20-%20Junglee%20Music%20Telugu.mp3" },
         { name: "Nela Meedha Lene", lyrics: "Ananth SriRam", singer: "Yazin Nizar" },
         { name: "E Kshanam", lyrics: "Ram Babu Gosala", singer: "Karthik" },
         { name: "E Kshanam (Female Version)", lyrics: "Ram Babu Gosala", singer: "Pranathi" },

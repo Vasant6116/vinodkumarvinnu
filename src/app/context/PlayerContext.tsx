@@ -3,7 +3,7 @@ import { createContext, useContext, useState, type ReactNode } from "react";
 export interface NowPlaying {
   name: string;
   singer: string;
-  driveId: string;
+  audioUrl?: string;
   albumArt?: string;
 }
 
