@@ -318,7 +318,7 @@ export default function Gallery() {
               className="font-['Jaro'] text-white text-[40px] md:text-[64px] leading-[0.8] mb-4"
               style={{ fontVariationSettings: "'opsz' 6" }}
             >
-              MOMENTS
+              MEMORY VAULT
             </h1>
             <p className="font-['Inter'] text-neutral-400 max-w-2xl leading-relaxed mb-8">
               Behind the scenes moments from studio sessions, live performances, and collaborations.

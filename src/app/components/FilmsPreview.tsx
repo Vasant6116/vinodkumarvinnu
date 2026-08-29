@@ -42,7 +42,7 @@ export function FilmsPreview() {
       <div className="max-w-[1440px] mx-auto">
         <div className="flex justify-between items-center mb-8 md:mb-12">
           <h2 className="font-['Jaro'] text-white text-[32px] md:text-[48px] leading-[0.8]" style={{ fontVariationSettings: "'opsz' 6" }}>
-            FILMS
+            ARCANE CINEMA
           </h2>
           <Link 
             to="/films" 

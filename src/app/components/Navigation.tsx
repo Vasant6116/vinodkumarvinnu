@@ -1,12 +1,14 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
-import { Menu, X, Phone, MessageCircle, Mail, MapPin } from 'lucide-react';
+import { Menu, X, Phone, MessageCircle, Mail, MapPin, Instagram, Clapperboard } from 'lucide-react';
 
 const CONTACT_LINKS = [
   { icon: Phone,         href: "tel:+919666485736",                          label: "Call" },
   { icon: MessageCircle, href: "https://wa.me/919666485736",                  label: "WhatsApp" },
-  { icon: Mail,          href: "mailto:",                                     label: "Email" },
+  { icon: Mail,          href: "mailto:composervinnu@gmail.com",              label: "Email" },
   { icon: MapPin,        href: "https://maps.app.goo.gl/nY57etsQ2NUS9pBq8",  label: "Location" },
+  { icon: Instagram,     href: "https://www.instagram.com/v4vinnu/",          label: "Instagram" },
+  { icon: Clapperboard,  href: "https://www.imdb.com/name/nm11949065/",       label: "IMDb" },
 ];
 
 export function Navigation() {
@@ -14,11 +16,11 @@ export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   const navLinks = [
-    { path: '/', label: 'Home' },
-    { path: '/about', label: 'The Story' },
-    { path: '/films', label: 'Films' },
-    { path: '/discography', label: 'Discography' },
-    { path: '/gallery', label: 'Moments' },
+    { path: '/', label: 'The Realm' },
+    { path: '/about', label: 'The Composer’s Chronicle' },
+    { path: '/films', label: 'Arcane Cinema' },
+    { path: '/discography', label: 'The Sound Grimoire' },
+    { path: '/gallery', label: 'Memory Vault' },
   ];
 
   return (
@@ -96,7 +98,7 @@ export function Navigation() {
                 </Link>
               ))}
               {/* Mobile contact icon row */}
-              <div className="flex items-center justify-center gap-3 px-6 py-4">
+              <div className="flex items-center justify-center gap-3 px-6 py-4 flex-wrap">
                 {CONTACT_LINKS.map(({ icon: Icon, href, label }) => (
                   <a
                     key={label}

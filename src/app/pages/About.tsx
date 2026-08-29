@@ -1,5 +1,5 @@
 import sirPhoto from '../../imports/sir_photo.jpg';
-import { Phone, MessageCircle, Mail, MapPin } from 'lucide-react';
+import { Phone, MessageCircle, Mail, MapPin, Instagram, Clapperboard } from 'lucide-react';
 
 export default function About() {
   return (
@@ -21,7 +21,7 @@ export default function About() {
             className="font-['Jaro'] text-white text-[40px] md:text-[64px] leading-[0.8]"
             style={{ fontVariationSettings: "'opsz' 6" }}
           >
-            THE STORY
+            THE COMPOSER'S CHRONICLE
           </h1>
         </div>
       </section>
@@ -103,13 +103,13 @@ export default function About() {
         <div className="mt-10 md:mt-16 mb-10 md:mb-16">
           <div className="space-y-4 md:space-y-6">
             <h2 className="font-['Jaro'] text-[#D4AF37] text-[24px] md:text-[32px] leading-[0.8] mb-4 md:mb-6" style={{ fontVariationSettings: "'opsz' 6" }}>
-              STORY BEHIND THE COMPOSITIONS
+              THE LORE BEHIND THE COMPOSITIONS
             </h2>
             <p className="font-['Inter'] text-neutral-300 leading-relaxed text-sm md:text-base mb-4">
               Every piece of music carries its own narrative. For Vinnu, the process of creating a score or a song is deeply intertwined with the story it seeks to tell. Whether it is an independent track echoing a personal revelation or a film score designed to elevate an on-screen moment, the journey from silence to sound is filled with intentionality.
             </p>
             <p className="font-['Inter'] text-neutral-300 leading-relaxed text-sm md:text-base mb-4">
-              The "Story behind the composition" is an editorial lens into this creative process—revealing the inspirations, challenges, and serendipitous moments that shape the final audio experience. Discover these stories interwoven across his films and independent projects.
+              The lore behind the composition is an editorial lens into this creative process—revealing the inspirations, challenges, and serendipitous moments that shape the final audio experience. Discover these stories interwoven across his films and independent projects.
             </p>
           </div>
         </div>
@@ -120,7 +120,7 @@ export default function About() {
               CONTACT & CONNECT
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
               {/* Call */}
               <a
@@ -154,7 +154,7 @@ export default function About() {
 
               {/* Email */}
               <a
-                href="mailto:"
+                href="mailto:composervinnu@gmail.com"
                 className="group flex flex-col items-center gap-4 px-6 py-8 border border-[#2a2a2a] hover:border-[#D4AF37]/60 bg-[#0a0a0a] hover:bg-[#D4AF37]/5 transition-all duration-300"
               >
                 <div className="w-12 h-12 rounded-full border border-[#2a2a2a] group-hover:border-[#D4AF37]/50 flex items-center justify-center transition-colors duration-300">
@@ -162,7 +162,39 @@ export default function About() {
                 </div>
                 <div className="text-center">
                   <p className="font-['Jaro'] text-white text-[13px] tracking-[1.5px] mb-1" style={{ fontVariationSettings: "'opsz' 6" }}>EMAIL</p>
-                  <p className="font-['Inter'] text-neutral-500 text-[11px] group-hover:text-neutral-400 transition-colors">Link coming soon</p>
+                  <p className="font-['Inter'] text-neutral-500 text-[11px] group-hover:text-neutral-400 transition-colors">composervinnu@gmail.com</p>
+                </div>
+              </a>
+
+              {/* Instagram */}
+              <a
+                href="https://www.instagram.com/v4vinnu/"
+                target="_blank"
+                rel="noreferrer"
+                className="group flex flex-col items-center gap-4 px-6 py-8 border border-[#2a2a2a] hover:border-[#D4AF37]/60 bg-[#0a0a0a] hover:bg-[#D4AF37]/5 transition-all duration-300"
+              >
+                <div className="w-12 h-12 rounded-full border border-[#2a2a2a] group-hover:border-[#D4AF37]/50 flex items-center justify-center transition-colors duration-300">
+                  <Instagram size={20} className="text-neutral-500 group-hover:text-[#D4AF37] transition-colors duration-300" />
+                </div>
+                <div className="text-center">
+                  <p className="font-['Jaro'] text-white text-[13px] tracking-[1.5px] mb-1" style={{ fontVariationSettings: "'opsz' 6" }}>INSTAGRAM</p>
+                  <p className="font-['Inter'] text-neutral-500 text-[11px] group-hover:text-neutral-400 transition-colors">@v4vinnu</p>
+                </div>
+              </a>
+
+              {/* IMDb */}
+              <a
+                href="https://www.imdb.com/name/nm11949065/"
+                target="_blank"
+                rel="noreferrer"
+                className="group flex flex-col items-center gap-4 px-6 py-8 border border-[#2a2a2a] hover:border-[#D4AF37]/60 bg-[#0a0a0a] hover:bg-[#D4AF37]/5 transition-all duration-300"
+              >
+                <div className="w-12 h-12 rounded-full border border-[#2a2a2a] group-hover:border-[#D4AF37]/50 flex items-center justify-center transition-colors duration-300">
+                  <Clapperboard size={20} className="text-neutral-500 group-hover:text-[#D4AF37] transition-colors duration-300" />
+                </div>
+                <div className="text-center">
+                  <p className="font-['Jaro'] text-white text-[13px] tracking-[1.5px] mb-1" style={{ fontVariationSettings: "'opsz' 6" }}>IMDB</p>
+                  <p className="font-['Inter'] text-neutral-500 text-[11px] group-hover:text-neutral-400 transition-colors">View Profile</p>
                 </div>
               </a>
 

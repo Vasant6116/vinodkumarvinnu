@@ -9,8 +9,6 @@ import gZombieImage from 'figma:asset/fc8acd558b8f791c27c2bfd490757eca9cb0b048.p
 import missionC1000Image from 'figma:asset/9ea955c97921b902a92aba0d4c7eaf7b3c07a05a.png';
 
 
-import { MusicPlayer } from '../components/MusicPlayer';
-
 function FilmDetailView({ film, onBack }: { film: any, onBack: () => void }) {
   return (
     <div className="animate-in fade-in duration-500">
@@ -69,19 +67,6 @@ function FilmDetailView({ film, onBack }: { film: any, onBack: () => void }) {
               </div>
             )}
           </div>
-          
-          {film.songs && film.songs.length > 0 && (
-            <div className="mt-12">
-              <h4 className="text-[#D4AF37] font-['Jaro'] text-2xl mb-6">SOUNDTRACK</h4>
-              <MusicPlayer
-                songs={film.songs}
-                albumTitle={film.title}
-                albumYear={film.year}
-                albumType={film.genre || "Film Score"}
-                albumArt={film.image}
-              />
-            </div>
-          )}
         </div>
       </div>
     </div>
@@ -285,13 +270,6 @@ export default function Films() {
       platform: "Amazon Prime",
       platformType: "streaming",
       role: "Songs & Background Score",
-      songs: [
-        { name: "O Saathiya", lyrics: "Bhaskarabatla", singer: "Javed Ali", spotify: "#" },
-        { name: "Vellipoye", lyrics: "Bhaskarabatla", singer: "Rahul Sipligunj", spotify: "#" },
-        { name: "Nela Meedha Lene", lyrics: "Ananth SriRam", singer: "Yazin Nizar", spotify: "#" },
-        { name: "E Kshanam", lyrics: "Ram Babu Gosala", singer: "Karthik", spotify: "#" },
-        { name: "E Kshanam (Female Version)", lyrics: "Ram Babu Gosala", singer: "Pranathi", spotify: "#" },
-      ],
       image: oSaathiyaImage
     },
     {
@@ -302,13 +280,6 @@ export default function Films() {
       platformType: "festival",
       role: "Songs & Background Score",
       description: "Recently released in theaters – streaming soon",
-      songs: [
-        { name: "Gundelona", lyrics: "Vinod Kumar Vinnu & Prasad Saana", singer: "Ramana Gogula", spotify: "#" },
-        { name: "Hawaii Hawaii", lyrics: "Bhaskarabatla", singer: "Sunitha", spotify: "#" },
-        { name: "Pranam Kaalche", lyrics: "Prasad Saana", singer: "RP Patnaik", spotify: "#" },
-        { name: "Nisilo Sasila", lyrics: "Prasad Saana", singer: "Chinmayi", spotify: "#" },
-        { name: "Eedu Magadentra Bujji", lyrics: "C-Shore", singer: "C-Shore", spotify: "#" },
-      ],
       image: naariImage
     },
     {
@@ -318,10 +289,6 @@ export default function Films() {
       platform: "Amazon Prime & Airtel Xtreme",
       platformType: "streaming",
       role: "Songs & Background Score",
-      songs: [
-        { name: "Avunani Kadantu", lyrics: "Ram Babu", singer: "Sai Charana", spotify: "#" },
-        { name: "Bambela", lyrics: "Vinod Kumar Vinnu", singer: "Vinod Kumar Vinnu", spotify: "#" },
-      ],
       image: gZombieImage
     },
     {
@@ -398,7 +365,7 @@ export default function Films() {
           <>
         <div className="mb-8 md:mb-12">
           <h1 className="font-['Jaro'] text-white text-[40px] md:text-[64px] leading-[0.8] mb-4 md:mb-6" style={{ fontVariationSettings: "'opsz' 6" }}>
-            FILMS
+            ARCANE CINEMA
           </h1>
           <p className="font-['Inter'] text-neutral-400 max-w-2xl leading-relaxed text-sm md:text-base">
             Explore my work across upcoming projects and released films.

@@ -28,7 +28,9 @@ export function MusicPlayer({ songs, albumTitle, albumYear, albumType, albumArt,
 
   const handleSongClick = (i: number) => {
     const song = songs[i];
-    if (!song.audioUrl) return;
+    // Block clicks if there is no audio URL or if it's an empty string
+    if (!song.audioUrl || song.audioUrl.trim() === '') return;
+    
     setCurrentIndex(i);
     setNowPlaying({
       name: song.name,
@@ -140,8 +142,10 @@ export function MusicPlayer({ songs, albumTitle, albumYear, albumType, albumArt,
       {/* ── Track rows ───────────────────────────────────── */}
       <div className="px-1 md:px-3 pb-4">
         {songs.map((song, i) => {
-          const isActive = nowPlaying?.audioUrl === song.audioUrl && !!song.audioUrl;
-          const hasAudio = !!song.audioUrl;
+          // Check if audio exists and is not just an empty string
+          const hasAudio = !!song.audioUrl && song.audioUrl.trim() !== '';
+          const isActive = nowPlaying?.audioUrl === song.audioUrl && hasAudio;
+          
           return (
             <button
               key={i}
@@ -167,7 +171,7 @@ export function MusicPlayer({ songs, albumTitle, albumYear, albumType, albumArt,
               <div className="min-w-0">
                 <p
                   className="text-[14px] font-semibold truncate leading-[19.25px]"
-                  style={{ fontFamily: "'Inter', sans-serif", color: isActive ? "#e16f05" : "white" }}
+                  style={{ fontFamily: "'Inter', sans-serif", color: isActive ? "#e16f05" : (hasAudio ? "white" : "#999") }}
                 >
                   {song.name}
                 </p>
@@ -179,20 +183,20 @@ export function MusicPlayer({ songs, albumTitle, albumYear, albumType, albumArt,
                 </p>
               </div>
 
-              <div className="flex items-center gap-1.5 md:gap-2 self-center shrink-0">
+              <div className="flex items-center gap-2 md:gap-3 self-center shrink-0">
                 {!hasAudio && (
                   <span
-                    className="text-[10px] rounded-[4px] px-[6px] py-[2px] leading-[15px]"
-                    style={{ background: "#2a2a2a", color: "#555", fontFamily: "'Inter', sans-serif" }}
+                    className="text-[9px] uppercase tracking-[1px] rounded-[3px] px-[5px] py-[2px] leading-[14px] border"
+                    style={{ borderColor: "#444", color: "#888", fontFamily: "'Inter', sans-serif" }}
                   >
-                    soon
+                    SOON
                   </span>
                 )}
                 <span
                   className="text-[12px] leading-[18px] tabular-nums"
                   style={{ fontFamily: "'Inter', sans-serif", color: "#737373" }}
                 >
-                  {DURATIONS[i % DURATIONS.length]}
+                  {hasAudio ? DURATIONS[i % DURATIONS.length] : "--:--"}
                 </span>
               </div>
             </button>
