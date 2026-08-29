@@ -8,15 +8,15 @@ export function GlobalPlayer() {
 
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 z-50"
+      className="fixed bottom-0 left-0 right-0 z-[100]"
       style={{ background: "#0a0a0a", borderTop: "1px solid rgba(255,255,255,0.1)" }}
     >
       <div className="flex items-center justify-between bg-[#121212] px-2 md:px-0" style={{ height: "72px" }}>
 
-        {/* Left: album art + song info (Responsive width applied here) */}
-        <div className="flex items-center gap-2 md:gap-3 md:px-4 shrink-0 w-[130px] sm:w-[180px] md:w-[260px]">
+        {/* Left: album art + song info (Tightened mobile width to prevent audio player collapse) */}
+        <div className="flex items-center gap-2 md:gap-3 md:px-4 shrink-0 w-[115px] sm:w-[180px] md:w-[260px]">
           {nowPlaying.albumArt && (
-            <div className="shrink-0 rounded overflow-hidden size-9 md:size-11">
+            <div className="shrink-0 rounded overflow-hidden size-9 md:size-11 hidden sm:block">
               <ImageWithFallback
                 src={nowPlaying.albumArt}
                 alt={nowPlaying.name}
@@ -40,8 +40,8 @@ export function GlobalPlayer() {
           </div>
         </div>
 
-        {/* Center: Native HTML5 Audio Player */}
-        <div className="flex-1 flex items-center px-1 md:px-4" style={{ height: "72px" }}>
+        {/* Center: Native HTML5 Audio Player (Added min-w-0 to fix flex squeeze) */}
+        <div className="flex-1 min-w-0 flex items-center px-1 md:px-4" style={{ height: "72px" }}>
           <audio
             key={nowPlaying.audioUrl}
             src={nowPlaying.audioUrl}
@@ -60,7 +60,7 @@ export function GlobalPlayer() {
         </div>
 
         {/* Right: close button */}
-        <div className="shrink-0 pl-1 pr-2 md:px-4">
+        <div className="shrink-0 pl-1 pr-1 md:px-4">
           <button
             onClick={() => setNowPlaying(null)}
             className="text-[#555] hover:text-white transition-colors p-2"
