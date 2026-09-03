@@ -212,7 +212,7 @@ export default function Discography() {
             audio_url
           )
         `)
-        .order('id', { ascending: true });
+        .order('display_order', { ascending: true });
 
       if (error) {
         console.error("Error fetching releases:", error);
