@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { MusicPlayer } from '../components/MusicPlayer';
-import { X, Film, User, PenLine, Mic, Building2, Music2, Award } from 'lucide-react';
+// Added Chevron icons for the accordion indication
+import { X, Film, User, PenLine, Mic, Building2, Music2, Award, ChevronDown, ChevronUp } from 'lucide-react';
 import { supabase } from "../../supabase/client";
 
 const CATEGORIES = ["All", "Released", "Unreleased"];
@@ -31,7 +32,7 @@ interface Release {
   storyDetails?: StoryDetails;
 }
 
-// ── Story Modal Components ──────────────────────────────────────────────────────
+// ── Story Modal Components ──────────────────────────────────────────────────
 
 function InfoRow({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
@@ -71,8 +72,9 @@ function StoryModal({ release, onClose }: { release: Release; onClose: () => voi
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative h-[200px] sm:h-[240px] shrink-0 overflow-hidden rounded-t-2xl">
-          <img src={release.image} alt={release.title} className="w-full h-full object-cover" />
+          <img src={release.image as string} alt={release.title} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-[#0e0e0e]" />
+          
           <button
             onClick={onClose}
             className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center transition-colors"
@@ -80,6 +82,7 @@ function StoryModal({ release, onClose }: { release: Release; onClose: () => voi
           >
             <X size={14} />
           </button>
+
           <div className="absolute bottom-5 left-6 right-14">
             <p className="font-['Inter'] text-[10px] uppercase tracking-[1.4px] text-[#D4AF37] mb-1">{release.type} · {release.year}</p>
             <h2 className="font-['Jaro'] text-white text-[32px] sm:text-[40px] leading-[0.9]" style={{ fontVariationSettings: "'opsz' 6" }}>
@@ -91,14 +94,18 @@ function StoryModal({ release, onClose }: { release: Release; onClose: () => voi
         <div className="px-6 pt-5 pb-8 flex flex-col gap-8">
           {s.story && (
             <section>
-              <h3 className="font-['Jaro'] text-[#D4AF37] text-[18px] mb-3" style={{ fontVariationSettings: "'opsz' 6" }}>STORY BEHIND THE COMPOSITION</h3>
+              <h3 className="font-['Jaro'] text-[#D4AF37] text-[18px] mb-3" style={{ fontVariationSettings: "'opsz' 6" }}>
+                STORY BEHIND THE COMPOSITION
+              </h3>
               <p className="font-['Inter'] text-neutral-300 text-sm leading-relaxed">{s.story}</p>
             </section>
           )}
 
           {hasProductionDetails && (
             <section>
-              <h3 className="font-['Jaro'] text-[#D4AF37] text-[18px] mb-1" style={{ fontVariationSettings: "'opsz' 6" }}>PRODUCTION DETAILS</h3>
+              <h3 className="font-['Jaro'] text-[#D4AF37] text-[18px] mb-1" style={{ fontVariationSettings: "'opsz' 6" }}>
+                PRODUCTION DETAILS
+              </h3>
               <div className="flex flex-col">
                 {infoRows.map((row) => (
                   row.value ? <InfoRow key={row.label} icon={row.icon} label={row.label} value={row.value} /> : null
@@ -109,16 +116,26 @@ function StoryModal({ release, onClose }: { release: Release; onClose: () => voi
 
           {s.trailerUrl && (
             <section>
-              <h3 className="font-['Jaro'] text-[#D4AF37] text-[18px] mb-3" style={{ fontVariationSettings: "'opsz' 6" }}>TRAILER</h3>
+              <h3 className="font-['Jaro'] text-[#D4AF37] text-[18px] mb-3" style={{ fontVariationSettings: "'opsz' 6" }}>
+                TRAILER
+              </h3>
               <div className="relative w-full rounded-xl overflow-hidden" style={{ paddingTop: "56.25%" }}>
-                <iframe className="absolute inset-0 w-full h-full" src={s.trailerUrl} title={`${release.title} Trailer`} allowFullScreen />
+                <iframe
+                  className="absolute inset-0 w-full h-full"
+                  src={s.trailerUrl}
+                  title={`${release.title} Trailer`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
               </div>
             </section>
           )}
 
           {s.credits && (
             <section>
-              <h3 className="font-['Jaro'] text-[#D4AF37] text-[18px] mb-3" style={{ fontVariationSettings: "'opsz' 6" }}>CREDITS</h3>
+              <h3 className="font-['Jaro'] text-[#D4AF37] text-[18px] mb-3" style={{ fontVariationSettings: "'opsz' 6" }}>
+                CREDITS
+              </h3>
               <p className="font-['Inter'] text-neutral-400 text-sm leading-relaxed whitespace-pre-line">{s.credits}</p>
             </section>
           )}
@@ -128,7 +145,7 @@ function StoryModal({ release, onClose }: { release: Release; onClose: () => voi
   );
 }
 
-// ── Main Page Layout ────────────────────────────────────────────────────────────
+// ── Main Page Layout ────────────────────────────────────────
 
 export default function Discography() {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -141,10 +158,7 @@ export default function Discography() {
     async function fetchReleases() {
       const { data, error } = await supabase
         .from('releases')
-        .select(`
-          *,
-          songs (id, track_number, name, singer, lyrics, audio_url)
-        `)
+        .select(`*, songs (id, track_number, name, singer, lyrics, audio_url)`)
         .order('display_order', { ascending: true });
 
       if (!error && data) {
@@ -173,19 +187,27 @@ export default function Discography() {
   }, []);
 
   if (isLoading) {
-    return <div className="min-h-screen bg-black text-white flex items-center justify-center font-['Inter']">Loading tracks...</div>;
+    return <div className="text-white text-center pt-32 font-['Inter']">Loading your library...</div>;
   }
 
   const filteredReleases = activeCategory === "All"
     ? releases
     : releases.filter(r => r.categories?.includes(activeCategory));
 
+  const handleAlbumClick = (release: Release) => {
+    if (selectedRelease?.id === release.id) {
+      setSelectedRelease(null);
+    } else {
+      setSelectedRelease(release);
+    }
+  };
+
   return (
-    <div className="pt-[100px] md:pt-[140px] pb-32 px-3 md:px-[35px] min-h-screen">
+    <div className="pt-[100px] md:pt-[140px] pb-24 px-3 md:px-[35px] min-h-screen">
       <div className="max-w-[1440px] mx-auto">
         
-        {/* ── Header Section ── */}
-        <div className="mb-10 md:mb-14">
+        {/* ── Header & Filters ── */}
+        <div className="mb-10">
           <h1 className="font-['Jaro'] text-white text-[40px] md:text-[64px] leading-[0.8] mb-6" style={{ fontVariationSettings: "'opsz' 6" }}>
             THE SOUND GRIMOIRE
           </h1>
@@ -198,7 +220,7 @@ export default function Discography() {
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`shrink-0 px-5 py-2 rounded-full font-['Inter'] text-[13px] font-medium transition-colors ${
+                className={`shrink-0 px-4 py-2 rounded-full font-['Inter'] text-sm transition-colors ${
                   activeCategory === category
                     ? 'bg-white text-black'
                     : 'bg-[#1a1a1a] text-neutral-400 hover:bg-[#2a2a2a] hover:text-white border border-[#3b3b3b]'
@@ -210,63 +232,93 @@ export default function Discography() {
           </div>
         </div>
 
-        {/* ── 2-Column Split Layout ── */}
-        <div className="flex flex-col md:flex-row gap-8 lg:gap-12">
+        {/* ── Body Layout ── */}
+        <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-start">
           
-          {/* Left Column: Scrollable List of Albums */}
-          <div className="w-full md:w-[280px] lg:w-[320px] shrink-0 flex flex-col gap-2">
-            {filteredReleases.map((release) => (
-              <button
-                key={release.id}
-                onClick={() => setSelectedRelease(release)}
-                className={`w-full flex items-center gap-4 p-2 rounded-lg transition-all text-left ${
-                  selectedRelease?.id === release.id ? 'bg-[#1a1a1a]' : 'hover:bg-[#121212]'
-                }`}
-              >
-                <img 
-                  src={release.image} 
-                  alt={release.title} 
-                  className="w-[52px] h-[52px] rounded-md object-cover shrink-0 bg-[#222]" 
-                />
-                <div className="min-w-0 flex-1">
-                  <p className={`truncate font-semibold text-[15px] ${selectedRelease?.id === release.id ? 'text-white' : 'text-neutral-300'}`} style={{ fontFamily: "Inter, sans-serif" }}>
-                    {release.title}
-                  </p>
-                  <p className="truncate text-neutral-500 text-[13px] mt-[2px]" style={{ fontFamily: "Inter, sans-serif" }}>
-                    Album • {release.year}
-                  </p>
-                </div>
-              </button>
-            ))}
-            {filteredReleases.length === 0 && (
-              <div className="text-neutral-500 py-6 text-center font-['Inter'] text-sm">No releases found.</div>
-            )}
+          {/* Left Column: Album List */}
+          <div className="w-full md:w-[320px] shrink-0 md:sticky md:top-[100px] md:max-h-[calc(100vh-140px)] md:overflow-y-auto pr-0 md:pr-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            <div className="space-y-2 md:space-y-1">
+              {filteredReleases.map((release) => {
+                const isSelected = selectedRelease?.id === release.id;
+                
+                return (
+                  // Unified Mobile Wrapper: When selected on mobile, the whole block becomes a styled box
+                  <div 
+                    key={release.id} 
+                    className={`flex flex-col rounded-xl transition-colors ${isSelected ? 'bg-[#121212] border border-[#222] md:bg-transparent md:border-none' : 'border border-transparent'}`}
+                  >
+                    <button
+                      onClick={() => handleAlbumClick(release)}
+                      className={`w-full flex items-center justify-between p-2.5 rounded-lg transition-colors text-left ${
+                        isSelected ? 'md:bg-[#1a1a1a]' : 'hover:bg-[#111]'
+                      }`}
+                    >
+                      <div className="flex items-center gap-4 min-w-0 flex-1">
+                        <img src={release.image as string} alt={release.title} className="w-[50px] h-[50px] rounded object-cover shrink-0 bg-[#222]" />
+                        <div className="min-w-0 flex-1">
+                          <p className={`truncate font-semibold text-[15px] font-['Inter'] ${isSelected ? 'text-white' : 'text-neutral-400'}`}>
+                            {release.title}
+                          </p>
+                          <p className="truncate text-neutral-500 text-[13px] font-['Inter'] mt-0.5">
+                            {release.type} • {release.year}
+                          </p>
+                        </div>
+                      </div>
+                      
+                      {/* Chevron Indicator (Visible only on mobile) */}
+                      <div className="md:hidden pr-2 text-neutral-500">
+                        {isSelected ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                      </div>
+                    </button>
+
+                    {/* MOBILE ONLY: Inline Accordion Player */}
+                    {isSelected && (
+                      <div className="md:hidden px-2 pb-3 animate-in fade-in slide-in-from-top-2 duration-300">
+                        <MusicPlayer
+                          songs={release.songs || []}
+                          albumTitle={release.title}
+                          albumYear={release.year}
+                          albumType={release.type}
+                          albumArt={release.image}
+                          storyDetails={release.storyDetails}
+                          onStoryClick={() => setStoryModalRelease(release)}
+                          isCompact={true} // Strips the redundant header
+                        />
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+              {filteredReleases.length === 0 && (
+                <div className="text-neutral-500 py-6 text-center font-['Inter'] text-sm">No releases found.</div>
+              )}
+            </div>
           </div>
 
-          {/* Right Column: Active Music Player View */}
-          <div className="flex-1 min-w-0">
+          {/* Right Column: Selected Album Player (DESKTOP ONLY) */}
+          <div className="hidden md:block flex-1 w-full min-w-0">
             {selectedRelease ? (
-              <div className="animate-in fade-in duration-300">
-                <MusicPlayer
-                  songs={selectedRelease.songs || []}
-                  albumTitle={selectedRelease.title}
-                  albumYear={selectedRelease.year}
-                  albumType={selectedRelease.type}
-                  albumArt={selectedRelease.image}
-                  onStoryClick={() => setStoryModalRelease(selectedRelease)}
-                />
-              </div>
+              <MusicPlayer
+                songs={selectedRelease.songs || []}
+                albumTitle={selectedRelease.title}
+                albumYear={selectedRelease.year}
+                albumType={selectedRelease.type}
+                albumArt={selectedRelease.image}
+                storyDetails={selectedRelease.storyDetails}
+                onStoryClick={() => setStoryModalRelease(selectedRelease)}
+                isCompact={false}
+              />
             ) : (
-              <div className="h-full flex items-center justify-center text-neutral-500 font-['Inter'] border border-[#1a1a1a] rounded-xl p-10 bg-[#0a0a0a]">
+              <div className="border border-[#1a1a1a] bg-[#0a0a0a] rounded-[16px] h-[300px] flex items-center justify-center text-neutral-500 font-['Inter']">
                 Select an album from the list to view tracks
               </div>
             )}
           </div>
-        </div>
 
+        </div>
       </div>
 
-      {/* Story Modal */}
+      {/* Story Modal Rendering */}
       {storyModalRelease && (
         <StoryModal
           release={storyModalRelease}
