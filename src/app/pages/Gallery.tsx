@@ -1,253 +1,211 @@
-import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import { useEffect, useState } from 'react';
+import { supabase } from "../../supabase/client";
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
 
 const CATEGORIES = [
-  "All",
-  "Studio photos",
-  "Recording sessions",
-  "Orchestra recordings",
-  "Live musicians",
-  "DAW/software screen captures",
+  "All", 
+  "Studio photos", 
+  "Recording sessions", 
+  "My Photos",
+  "Orchestra recordings", 
+  "Live musicians", 
+  "DAW/software screen captures", 
   "Behind-the-scenes videos"
 ];
 
-const TILT: Record<number, number> = {
-  1: -1.5, 2: 0.8, 3: -0.5,
-  4: 1.2,  5: -0.8, 6: 0.4,
-  7: -1.0, 8: 0.7,  9: -0.3,
-};
-
-const TORCHES = [
-  { x: 10, y: 18, r: 480, a: 0.07, spd: 4.2 },
-  { x: 90, y: 14, r: 400, a: 0.06, spd: 5.1 },
-  { x: 5,  y: 58, r: 340, a: 0.05, spd: 3.8 },
-  { x: 95, y: 54, r: 360, a: 0.05, spd: 4.7 },
-  { x: 50, y: 5,  r: 560, a: 0.04, spd: 6.0 },
-  { x: 50, y: 95, r: 420, a: 0.04, spd: 5.5 },
-];
-
-function PortraitFrame({
-  image,
-  isHovered,
-}: {
-  image: { id: number; title: string; description: string; image: string };
-  isHovered: boolean;
-}) {
-  return (
-    <>
-      <div
-        style={{
-          padding: "4px",
-          background: "linear-gradient(135deg, #2e1d00 0%, #b8891a 18%, #d4af37 32%, #f0d060 50%, #d4af37 68%, #b8891a 82%, #2e1d00 100%)",
-          boxShadow: isHovered
-            ? "inset 0 0 8px rgba(255,230,120,0.45), 0 0 0 1px rgba(20,12,0,0.95), 0 28px 90px rgba(0,0,0,0.98), 0 0 55px rgba(212,175,55,0.18), 0 0 110px rgba(255,160,30,0.09)"
-            : "inset 0 0 4px rgba(255,200,80,0.2), 0 0 0 1px rgba(20,12,0,0.95), 0 14px 50px rgba(0,0,0,0.92), 0 4px 16px rgba(0,0,0,0.75)",
-          transition: "box-shadow 0.45s ease",
-        }}
-      >
-        <div style={{ backgroundColor: "#090603", padding: "11px", boxShadow: "inset 0 0 20px rgba(0,0,0,0.95)" }}>
-          <div style={{ border: "1px solid rgba(160,115,22,0.38)", boxShadow: "inset 0 0 6px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,0,0,0.4)", overflow: "hidden" }}>
-            <div className="relative aspect-[4/3] overflow-hidden">
-              <ImageWithFallback
-                src={image.image}
-                alt={image.title}
-                className="w-full h-full object-cover"
-                style={{
-                  transform: isHovered ? "scale(1.065)" : "scale(1)",
-                  filter: isHovered ? "brightness(1.0) saturate(1.08) contrast(1.02)" : "brightness(0.78) saturate(0.85)",
-                  transition: "transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.45s ease",
-                }}
-              />
-              {(["tl", "tr", "bl", "br"] as const).map((corner) => (
-                <div
-                  key={corner}
-                  style={{
-                    position: "absolute",
-                    width: "18px", height: "18px",
-                    top: corner.startsWith("t") ? 6 : "auto", bottom: corner.startsWith("b") ? 6 : "auto",
-                    left: corner.endsWith("l") ? 6 : "auto", right: corner.endsWith("r") ? 6 : "auto",
-                    border: "1px solid rgba(212,175,55,0.35)",
-                    borderRight: corner.endsWith("r") ? "1px solid rgba(212,175,55,0.35)" : "none",
-                    borderBottom: corner.startsWith("b") ? "1px solid rgba(212,175,55,0.35)" : "none",
-                    borderLeft: corner.endsWith("l") ? "1px solid rgba(212,175,55,0.35)" : "none",
-                    borderTop: corner.startsWith("t") ? "1px solid rgba(212,175,55,0.35)" : "none",
-                    opacity: isHovered ? 0.8 : 0.3, transition: "opacity 0.4s ease", pointerEvents: "none",
-                  }}
-                />
-              ))}
-              <div
-                style={{
-                  position: "absolute", inset: 0,
-                  background: "linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)",
-                  opacity: isHovered ? 1 : 0, transition: "opacity 0.38s ease",
-                  display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "18px",
-                }}
-              >
-                <p style={{ fontFamily: "'Jaro', sans-serif", color: "white", fontSize: "17px", lineHeight: "0.9", marginBottom: "5px", fontVariationSettings: "'opsz' 6", transform: isHovered ? "translateY(0)" : "translateY(10px)", transition: "transform 0.38s ease", letterSpacing: "0.04em" }}>
-                  {image.title.toUpperCase()}
-                </p>
-                <p style={{ fontFamily: "'Inter', sans-serif", color: "rgba(255,255,255,0.72)", fontSize: "11px", letterSpacing: "0.03em" }}>
-                  {image.description}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div style={{ display: "flex", justifyContent: "center", marginTop: "9px" }}>
-        <div style={{ background: "linear-gradient(90deg, transparent, rgba(139,105,20,0.35) 12%, rgba(201,162,39,0.75) 30%, rgba(220,180,50,0.85) 50%, rgba(201,162,39,0.75) 70%, rgba(139,105,20,0.35) 88%, transparent)", padding: "5px 22px", minWidth: "60%", textAlign: "center", boxShadow: "0 2px 10px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,240,150,0.2)" }}>
-          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "7.5px", letterSpacing: "2.8px", textTransform: "uppercase", color: "#1a0f00", fontWeight: 700 }}>
-            {image.title}
-          </p>
-        </div>
-      </div>
-    </>
-  );
+interface MemoryItem {
+  id: number;
+  title: string;
+  story: string;
+  image_url: string;
+  category: string;
 }
 
 export default function Gallery() {
-  const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState("All");
-  const [hoveredId, setHoveredId] = useState<number | null>(null);
-  const touchStartX = useRef<number | null>(null);
-
-  const allImages = [
-    { id: 1, title: "Studio Recording Session", category: "Recording sessions", description: "Composing the score for O Saathiya", image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZWNvcmRpbmclMjBzdHVkaW98ZW58MXx8fHwxNzY0NzU2NjgzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
-    { id: 2, title: "Live Performance", category: "Live musicians", description: "Concert at Hyderabad Music Festival", image: "https://images.unsplash.com/photo-1690013429722-87852aae164b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb25jZXJ0JTIwc3RhZ2UlMjBsaWdodHN8ZW58MXx8fHwxNzY0NzU3MDAzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
-    { id: 3, title: "Collaboration Session", category: "Studio photos", description: "Working with Ramana Gogula Garu", image: "https://images.unsplash.com/photo-1761652556225-1425a7c36247?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtdXNpYyUyMGNvbGxhYm9yYXRpb24lMjBzdHVkaW98ZW58MXx8fHwxNzY0NzU3MDAzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
-    { id: 4, title: "Composition Work", category: "DAW/software screen captures", description: "Creating the score for Naari", image: "https://images.unsplash.com/photo-1672847900994-3bf37a83357d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtdXNpYyUyMG5vdGVzJTIwY29tcG9zaXRpb258ZW58MXx8fHwxNzY0NzU3MDA0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
-    { id: 5, title: "Film Score Recording", category: "Recording sessions", description: "Recording background score", image: "https://images.unsplash.com/photo-1701374929875-37125c54cb29?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aW55bCUyMHJlY29yZCUyMHR1cm50YWJsZXxlbnwxfHx8fDE3NjQ3MzE0MzJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
-    { id: 6, title: "Orchestra Session", category: "Orchestra recordings", description: "Working with live orchestra", image: "https://images.unsplash.com/photo-1551696785-927d4ac2d35b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxvcmNoZXN0cmElMjBwZXJmb3JtYW5jZXxlbnwxfHx8fDE3NjQ2NzUyMDd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
-    { id: 7, title: "Music Production", category: "DAW/software screen captures", description: "Mixing and mastering session", image: "https://images.unsplash.com/photo-1600443446566-c8a2e34c779b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxvcmNoZXN0cmElMjBjb25kdWN0b3J8ZW58MXx8fHwxNzY0NzU2NjgyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
-    { id: 8, title: "Behind the Scenes", category: "Behind-the-scenes videos", description: "On set during film scoring", image: "https://images.unsplash.com/photo-1612544409025-e1f6a56c1152?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaWxtJTIwcHJvZHVjdGlvbnxlbnwxfHx8fDE3NjQ2ODIwMjN8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
-    { id: 9, title: "Award Ceremony", category: "Studio photos", description: "IFFI Goa Film Festival", image: "https://images.unsplash.com/photo-1709832279012-293766967250?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaWxtJTIwc2V0JTIwY2luZW1hfGVufDF8fHx8MTc2NDc1NzAwM3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
-  ];
-
-  const images = activeCategory === "All" ? allImages : allImages.filter(img => img.category === activeCategory);
-
-  const handlePrevious = () => {
-    if (selectedImage === null) return;
-    const currentIndex = images.findIndex(img => img.id === selectedImage);
-    const previousIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
-    setSelectedImage(images[previousIndex].id);
-  };
-
-  const handleNext = () => {
-    if (selectedImage === null) return;
-    const currentIndex = images.findIndex(img => img.id === selectedImage);
-    const nextIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
-    setSelectedImage(images[nextIndex].id);
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.changedTouches[0].clientX;
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    touchStartX.current = null;
-    if (Math.abs(dx) < 50) return;
-    if (dx < 0) handleNext();
-    else handlePrevious();
-  };
+  const [memories, setMemories] = useState<MemoryItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  // Carousel State
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    if (selectedImage === null) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") handlePrevious();
-      if (e.key === "ArrowRight") handleNext();
-      if (e.key === "Escape") setSelectedImage(null);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [selectedImage, images]);
+    async function fetchMemories() {
+      const { data, error } = await supabase
+        .from('memory_vault')
+        .select('*')
+        .order('display_order', { ascending: true });
 
-  const selectedImageData = images.find(img => img.id === selectedImage);
+      if (!error && data) {
+        setMemories(data);
+      }
+      setIsLoading(false);
+    }
+    fetchMemories();
+  }, []);
+
+  const filteredMemories = activeCategory === "All"
+    ? memories
+    : memories.filter(m => m.category === activeCategory);
+
+  // Carousel Handlers
+  const openCarousel = (index: number) => setSelectedIndex(index);
+  const closeCarousel = () => setSelectedIndex(null);
+  
+  const showNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (selectedIndex !== null) {
+      setSelectedIndex((selectedIndex + 1) % filteredMemories.length);
+    }
+  };
+  
+  const showPrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (selectedIndex !== null) {
+      setSelectedIndex((selectedIndex - 1 + filteredMemories.length) % filteredMemories.length);
+    }
+  };
+
+  if (isLoading) {
+    return <div className="text-white text-center pt-32 font-['Inter'] h-screen bg-[#0a0a0a]">Loading the vault...</div>;
+  }
 
   return (
-    <div className="min-h-screen relative overflow-hidden" style={{ background: "#0d0a07" }}>
-      <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 118px, rgba(0,0,0,0.22) 118px, rgba(0,0,0,0.22) 120px), repeating-linear-gradient(90deg, transparent, transparent 238px, rgba(0,0,0,0.1) 238px, rgba(0,0,0,0.1) 240px), repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(80,50,10,0.015) 59px, rgba(80,50,10,0.015) 60px)" }} />
-      {TORCHES.map((t, i) => (
-        <div key={i} className="absolute pointer-events-none" style={{ left: `${t.x}%`, top: `${t.y}%`, width: `${t.r}px`, height: `${t.r}px`, transform: "translate(-50%, -50%)", borderRadius: "50%", background: `radial-gradient(circle, rgba(255,145,28,${t.a}) 0%, rgba(255,110,10,${t.a * 0.4}) 35%, transparent 70%)`, animation: `torchWaver ${t.spd}s ${i * -1.3}s infinite ease-in-out` }} />
-      ))}
-      <div className="relative pt-[140px] pb-24 px-[20px] md:px-[35px]">
-        <div className="max-w-[1440px] mx-auto">
-          <div className="mb-14">
-            <h1 className="font-['Jaro'] text-white text-[40px] md:text-[64px] leading-[0.8] mb-4" style={{ fontVariationSettings: "'opsz' 6" }}>
-              MEMORY VAULT
-            </h1>
-            <p className="font-['Inter'] text-neutral-400 max-w-2xl leading-relaxed mb-8">
-              Behind the scenes moments from studio sessions, live performances, and collaborations.
-            </p>
-            <div className="flex flex-nowrap overflow-x-auto gap-3 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-              {CATEGORIES.map(category => (
-                <button
-                  key={category}
-                  onClick={() => setActiveCategory(category)}
-                  className={`shrink-0 px-4 py-2 rounded-full font-['Inter'] text-sm transition-colors ${activeCategory === category ? "bg-white text-black" : "bg-[#1a1a1a] text-neutral-400 hover:bg-[#2a2a2a] hover:text-white border border-[#3b3b3b]"}`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-14 lg:gap-16">
-            {images.map((image) => {
-              const tilt = TILT[image.id] ?? 0;
-              const isHovered = hoveredId === image.id;
-              return (
-                <div key={image.id} className="flex flex-col items-center">
-                  <div style={{ width: "2px", height: "20px", background: "linear-gradient(to bottom, rgba(180,140,30,0.6), rgba(100,70,10,0.2))", marginBottom: "4px", opacity: 0.7 }} />
-                  <div style={{ width: "60%", height: "1px", background: "linear-gradient(90deg, transparent, rgba(160,120,20,0.4) 20%, rgba(200,160,40,0.6) 50%, rgba(160,120,20,0.4) 80%, transparent)", marginBottom: "6px" }} />
-                  <div style={{ width: "100%", transform: isHovered ? "translateY(-10px) rotate(0deg)" : `translateY(0px) rotate(${tilt}deg)`, transition: "transform 0.52s cubic-bezier(0.25, 0.46, 0.45, 0.94)", cursor: "pointer" }} onMouseEnter={() => setHoveredId(image.id)} onMouseLeave={() => setHoveredId(null)} onClick={() => setSelectedImage(image.id)}>
-                    <PortraitFrame image={image} isHovered={isHovered} />
-                  </div>
-                </div>
-              );
-            })}
+    <div className="pt-[100px] md:pt-[140px] pb-24 px-3 md:px-[35px] min-h-screen bg-[#0a0a0a]">
+      <div className="max-w-[1440px] mx-auto">
+        
+        {/* ── Header & Filters ── */}
+        <div className="mb-10 md:mb-14">
+          <h1 className="font-['Jaro'] text-white text-[40px] md:text-[64px] leading-[0.8] mb-4" style={{ fontVariationSettings: "'opsz' 6" }}>
+            MEMORY VAULT
+          </h1>
+          <p className="font-['Inter'] text-neutral-400 max-w-2xl leading-relaxed mb-8">
+            Behind the scenes moments from studio sessions, live performances, and collaborations.
+          </p>
+
+          <div className="flex flex-nowrap overflow-x-auto gap-3 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            {CATEGORIES.map(category => (
+              <button
+                key={category}
+                onClick={() => {
+                  setActiveCategory(category);
+                  setSelectedIndex(null); // Reset carousel if open
+                }}
+                className={`shrink-0 px-4 py-2 rounded-full font-['Inter'] text-sm transition-colors ${
+                  activeCategory === category
+                    ? 'bg-white text-black'
+                    : 'bg-[#121212] text-neutral-400 hover:bg-[#2a2a2a] hover:text-white border border-[#222]'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
           </div>
         </div>
+
+        {/* ── Bento / Masonry Grid Layout ── */}
+        {/* Reduced columns to make images bigger: 1 on mobile, 2 on tablet, 3 on desktop */}
+        <div className="columns-1 md:columns-2 lg:columns-3 gap-4 md:gap-6">
+          {filteredMemories.map((memory, index) => (
+            <div 
+              key={memory.id} 
+              onClick={() => openCarousel(index)}
+              className="relative break-inside-avoid mb-4 md:mb-6 rounded-[16px] overflow-hidden group bg-[#111] border border-[#222] cursor-pointer hover:border-[#444] transition-colors"
+            >
+              
+              {/* Image Container */}
+              <div className="relative w-full overflow-hidden">
+                <img 
+                  src={memory.image_url} 
+                  alt={memory.title} 
+                  className="w-full h-auto block object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+                {/* Smooth gradient melting the image into the solid background below */}
+                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#111] to-transparent pointer-events-none" />
+              </div>
+
+              {/* Extended Card Text Area (Solid Background) */}
+              <div className="relative bg-[#111] px-5 pb-6 pt-0">
+                <h2 
+                  className="font-['Jaro'] text-white text-[24px] md:text-[28px] leading-tight mb-2" 
+                  style={{ fontVariationSettings: "'opsz' 6" }}
+                >
+                  {memory.title}
+                </h2>
+                <p className="font-['Inter'] text-neutral-400 text-[13px] md:text-[14px] leading-relaxed line-clamp-3 group-hover:text-neutral-300 transition-colors">
+                  {memory.story}
+                </p>
+              </div>
+              
+            </div>
+          ))}
+        </div>
+
+        {filteredMemories.length === 0 && (
+          <div className="text-neutral-500 py-12 text-center font-['Inter'] text-lg">
+            No memories found for this category.
+          </div>
+        )}
+
       </div>
-      {selectedImage !== null && selectedImageData && (
-        <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center h-[100dvh]" style={{ background: "rgba(0,0,0,0.97)" }}>
-          <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(212,175,55,0.04) 0%, transparent 60%)" }} />
-          <button onClick={() => setSelectedImage(null)} className="absolute top-4 right-4 md:top-6 md:right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-20">
-            <X className="w-6 h-6 text-white" />
+
+      {/* ── Fullscreen Carousel / Lightbox ── */}
+      {selectedIndex !== null && (
+        <div 
+          className="fixed inset-0 z-[300] flex items-center justify-center bg-black/95 backdrop-blur-sm"
+          onClick={closeCarousel}
+        >
+          {/* Close Button */}
+          <button 
+            className="absolute top-6 right-6 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors z-[310]"
+            onClick={closeCarousel}
+          >
+            <X size={24} />
           </button>
-          <button onClick={handlePrevious} className="hidden md:flex absolute left-6 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10">
-            <ChevronLeft className="w-6 h-6 text-white" />
-          </button>
-          <button onClick={handleNext} className="hidden md:flex absolute right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10">
-            <ChevronRight className="w-6 h-6 text-white" />
-          </button>
-          <div className="w-full h-full md:h-auto flex flex-col justify-center items-center md:max-w-6xl md:max-h-[85vh] mx-auto px-3 md:px-20 relative z-10">
-            <div className="relative w-full flex flex-col items-center" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-              <div className="relative w-full max-w-[95vw] sm:max-w-md md:max-w-none mx-auto p-0 md:p-[3px] bg-transparent md:[background:linear-gradient(135deg,#2e1d00_0%,#b8891a_18%,#d4af37_32%,#f0d060_50%,#d4af37_68%,#b8891a_82%,#2e1d00_100%)] md:shadow-[0_0_0_1px_rgba(20,12,0,0.9),0_40px_120px_rgba(0,0,0,0.98),0_0_80px_rgba(212,175,55,0.12)]">
-                <div className="p-0 md:p-2 bg-transparent md:bg-[#090603] md:shadow-[inset_0_0_20px_rgba(0,0,0,0.95)]">
-                  <img src={selectedImageData.image} alt={selectedImageData.title} className="w-full max-w-[95vw] sm:max-w-md md:max-w-none mx-auto aspect-auto object-contain h-auto max-h-[62vh] md:max-h-[68vh]" draggable={false} />
-                </div>
-                <button type="button" onClick={handlePrevious} className="md:hidden absolute left-2 top-1/2 -translate-y-1/2 p-2.5 bg-black/50 hover:bg-black/70 rounded-full transition-colors z-10" aria-label="Previous photo">
-                  <ChevronLeft className="w-5 h-5 text-white" />
-                </button>
-                <button type="button" onClick={handleNext} className="md:hidden absolute right-2 top-1/2 -translate-y-1/2 p-2.5 bg-black/50 hover:bg-black/70 rounded-full transition-colors z-10" aria-label="Next photo">
-                  <ChevronRight className="w-5 h-5 text-white" />
-                </button>
-              </div>
-              <div className="mt-4 md:mt-5 flex flex-col items-center text-center gap-2 px-2">
-                <div style={{ background: "linear-gradient(90deg, transparent, rgba(139,105,20,0.35) 12%, rgba(201,162,39,0.75) 30%, rgba(220,180,50,0.85) 50%, rgba(201,162,39,0.75) 70%, rgba(139,105,20,0.35) 88%, transparent)", padding: "5px 32px", boxShadow: "0 2px 10px rgba(0,0,0,0.6)", textAlign: "center" }}>
-                  <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "8px", letterSpacing: "3px", textTransform: "uppercase", color: "#1a0f00", fontWeight: 700 }}>
-                    {selectedImageData.title}
-                  </p>
-                </div>
-                <p className="font-['Inter'] text-neutral-400 text-sm">{selectedImageData.description}</p>
-                <p className="font-['Inter'] text-neutral-600 text-xs">{images.findIndex(img => img.id === selectedImage) + 1} / {images.length}</p>
-              </div>
+
+          {/* Navigation Controls */}
+          {filteredMemories.length > 1 && (
+            <>
+              <button 
+                className="absolute left-4 md:left-10 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors z-[310]"
+                onClick={showPrev}
+              >
+                <ChevronLeft size={32} />
+              </button>
+              <button 
+                className="absolute right-4 md:right-10 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors z-[310]"
+                onClick={showNext}
+              >
+                <ChevronRight size={32} />
+              </button>
+            </>
+          )}
+
+          {/* Active Carousel Item */}
+          <div 
+            className="w-full max-w-5xl max-h-[90vh] flex flex-col items-center justify-center p-4 md:p-8"
+            onClick={(e) => e.stopPropagation()} // Prevent clicking the image from closing the modal
+          >
+            <img 
+              src={filteredMemories[selectedIndex].image_url} 
+              alt={filteredMemories[selectedIndex].title}
+              className="max-w-full max-h-[65vh] object-contain rounded-lg shadow-2xl mb-6 md:mb-8"
+            />
+            <div className="text-center max-w-3xl">
+              <h2 
+                className="font-['Jaro'] text-white text-[32px] md:text-[40px] leading-tight mb-3" 
+                style={{ fontVariationSettings: "'opsz' 6" }}
+              >
+                {filteredMemories[selectedIndex].title}
+              </h2>
+              <p className="font-['Inter'] text-neutral-300 text-[15px] md:text-[16px] leading-relaxed">
+                {filteredMemories[selectedIndex].story}
+              </p>
             </div>
           </div>
         </div>
       )}
+
     </div>
   );
 }

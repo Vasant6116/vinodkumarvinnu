@@ -4,7 +4,7 @@ import { MusicPlayer } from '../components/MusicPlayer';
 import { X, Film, User, PenLine, Mic, Building2, Music2, Award, ChevronDown, ChevronUp } from 'lucide-react';
 import { supabase } from "../../supabase/client";
 
-const CATEGORIES = ["All", "Released", "Unreleased"];
+const CATEGORIES = ["All", "Film Albums", "OST"];
 
 interface StoryDetails {
   story?: string;
