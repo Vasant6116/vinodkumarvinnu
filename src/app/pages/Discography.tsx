@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { MusicPlayer } from '../components/MusicPlayer';
-// Added Chevron icons for the accordion indication
-import { X, Film, User, PenLine, Mic, Building2, Music2, Award, ChevronDown, ChevronUp } from 'lucide-react';
+import { X, Film, User, PenLine, Mic, ChevronDown, ChevronUp } from 'lucide-react';
 import { supabase } from "../../supabase/client";
 
 const CATEGORIES = ["All", "Film Albums", "OST"];
@@ -12,10 +11,6 @@ interface StoryDetails {
   producer?: string;
   lyricist?: string;
   singers?: string;
-  recordingStudio?: string;
-  instruments?: string;
-  trailerUrl?: string;
-  credits?: string;
 }
 
 interface Release {
@@ -26,7 +21,6 @@ interface Release {
   categories: string[];
   platform?: string;
   description?: string;
-  director?: string;
   songs?: { name: string; singer: string; lyrics: string; audioUrl: string; }[];
   image: string;
   storyDetails?: StoryDetails;
@@ -54,8 +48,6 @@ function StoryModal({ release, onClose }: { release: Release; onClose: () => voi
     { icon: <User size={14} />, label: "Producer", value: s.producer },
     { icon: <PenLine size={14} />, label: "Lyricist", value: s.lyricist },
     { icon: <Mic size={14} />, label: "Singers", value: s.singers },
-    { icon: <Building2 size={14} />, label: "Recording Studio", value: s.recordingStudio },
-    { icon: <Music2 size={14} />, label: "Instruments Used", value: s.instruments },
   ];
 
   const hasProductionDetails = infoRows.some(row => !!row.value);
@@ -108,35 +100,9 @@ function StoryModal({ release, onClose }: { release: Release; onClose: () => voi
               </h3>
               <div className="flex flex-col">
                 {infoRows.map((row) => (
-                  row.value ? <InfoRow key={row.label} icon={row.icon} label={row.label} value={row.value} /> : null
+                  row.value ? <InfoRow key={row.label} icon={row.icon} label={row.label} value={row.value as string} /> : null
                 ))}
               </div>
-            </section>
-          )}
-
-          {s.trailerUrl && (
-            <section>
-              <h3 className="font-['Jaro'] text-[#D4AF37] text-[18px] mb-3" style={{ fontVariationSettings: "'opsz' 6" }}>
-                TRAILER
-              </h3>
-              <div className="relative w-full rounded-xl overflow-hidden" style={{ paddingTop: "56.25%" }}>
-                <iframe
-                  className="absolute inset-0 w-full h-full"
-                  src={s.trailerUrl}
-                  title={`${release.title} Trailer`}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            </section>
-          )}
-
-          {s.credits && (
-            <section>
-              <h3 className="font-['Jaro'] text-[#D4AF37] text-[18px] mb-3" style={{ fontVariationSettings: "'opsz' 6" }}>
-                CREDITS
-              </h3>
-              <p className="font-['Inter'] text-neutral-400 text-sm leading-relaxed whitespace-pre-line">{s.credits}</p>
             </section>
           )}
         </div>
@@ -165,7 +131,14 @@ export default function Discography() {
         const formattedData = data.map((release) => ({
           ...release,
           image: release.image_url,
-          storyDetails: release.story_details,
+          // Group the new flat database columns back into the storyDetails object so MusicPlayer doesn't break
+          storyDetails: {
+            story: release.story,
+            director: release.director,
+            producer: release.producer,
+            lyricist: release.lyricist,
+            singers: release.singers,
+          },
           songs: release.songs
             ?.sort((a: any, b: any) => a.track_number - b.track_number)
             .map((song: any) => ({
@@ -242,7 +215,6 @@ export default function Discography() {
                 const isSelected = selectedRelease?.id === release.id;
                 
                 return (
-                  // Unified Mobile Wrapper: When selected on mobile, the whole block becomes a styled box
                   <div 
                     key={release.id} 
                     className={`flex flex-col rounded-xl transition-colors ${isSelected ? 'bg-[#121212] border border-[#222] md:bg-transparent md:border-none' : 'border border-transparent'}`}
@@ -265,7 +237,7 @@ export default function Discography() {
                         </div>
                       </div>
                       
-                      {/* Chevron Indicator (Visible only on mobile) */}
+                      {/* Chevron Indicator */}
                       <div className="md:hidden pr-2 text-neutral-500">
                         {isSelected ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                       </div>
@@ -282,7 +254,7 @@ export default function Discography() {
                           albumArt={release.image}
                           storyDetails={release.storyDetails}
                           onStoryClick={() => setStoryModalRelease(release)}
-                          isCompact={true} // Strips the redundant header
+                          isCompact={true}
                         />
                       </div>
                     )}

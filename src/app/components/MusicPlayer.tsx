@@ -29,7 +29,7 @@ interface MusicPlayerProps {
   albumArt?: string;
   storyDetails?: StoryDetails;
   onStoryClick?: () => void;
-  isCompact?: boolean; // <-- New prop to strip redundant UI for mobile accordion
+  isCompact?: boolean;
 }
 
 const DURATIONS = ["4:48", "3:54", "3:54", "4:12", "3:38", "4:20", "3:55", "5:02", "3:47"];
@@ -49,7 +49,6 @@ function InfoRow({ icon, label, value }: { icon: React.ReactNode; label: string;
 export function MusicPlayer({ songs, albumTitle, albumYear, albumType, albumArt, storyDetails, onStoryClick, isCompact = false }: MusicPlayerProps) {
   const { setNowPlaying, nowPlaying } = usePlayer();
   const s = storyDetails ?? {};
-  const uniqueSingers = [...new Set(songs.map((s) => s.singer))];
 
   const infoRows = [
     { icon: <Film size={14} />, label: "Director", value: s.director },
@@ -100,9 +99,8 @@ export function MusicPlayer({ songs, albumTitle, albumYear, albumType, albumArt,
                 </p>
               )}
               <p className="text-[11px] md:text-[12px] leading-[1.4] font-['Inter'] text-neutral-400">
-                {uniqueSingers.join(" • ")}
-                {albumYear && <span> • {albumYear}</span>}
-                <span> • {songs.length} songs</span>
+                {albumYear && <span>{albumYear} • </span>}
+                <span>{songs.length} {songs.length === 1 ? 'song' : 'songs'}</span>
               </p>
             </div>
           </div>
