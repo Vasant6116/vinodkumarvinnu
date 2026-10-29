@@ -58,11 +58,6 @@ export default function About() {
             <p className="font-['Inter'] text-neutral-300 leading-relaxed text-sm md:text-base mb-4">
               Vinnu's artistic evolution was profoundly shaped by the guidance of his revered guru, <span className="text-[rgb(213,184,46)]">Sri Sashi Preetam</span> — an Indian rock visionary known for his electrifying musical identity. A composer, singer, and writer of remarkable force, Sashi Preetam created the evergreen Telugu classic <em>Gulabi</em> and helped redefine the rock soundscape in South Indian cinema. Under his mentorship, Vinnu absorbed not only technique, but a sense of sonic fearlessness.
             </p>
-            <p className="font-['Inter'] text-neutral-300 leading-relaxed text-sm md:text-base">
-              His journey also brought him into creative circles connected with legendary Indian composers:<br/>
-              – <span className="text-[rgb(213,184,46)]">Ramana Gogula</span>, South India's reggae icon and pioneering musical force<br/>
-              – <span className="text-[rgb(213,184,46)]">RP Patnaik</span>, renowned Telugu music director and filmmaker
-            </p>
             <p className="font-['Inter'] text-neutral-300 leading-relaxed text-sm md:text-base mt-4">
               These associations deepened his understanding of composition, storytelling, and artistic identity.
             </p>
