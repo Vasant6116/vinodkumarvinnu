@@ -18,8 +18,7 @@ export default function About() {
         {/* Title pinned to bottom of hero */}
         <div className="absolute bottom-10 md:bottom-14 left-[20px] md:left-[35px] right-[20px] md:right-[35px] max-w-[1440px] mx-auto">
           <h1
-            className="font-['Jaro'] text-white text-[40px] md:text-[64px] leading-[0.8]"
-            style={{ fontVariationSettings: "'opsz' 6" }}
+            className="heading-xl text-white"
           >
             THE COMPOSER'S CHRONICLE
           </h1>
@@ -52,7 +51,7 @@ export default function About() {
 
         <div className="mt-10 md:mt-16 mb-10 md:mb-16">
           <div className="space-y-4 md:space-y-6">
-            <h2 className="font-['Jaro'] text-[#D4AF37] text-[24px] md:text-[32px] leading-[0.8] mb-4 md:mb-6" style={{ fontVariationSettings: "'opsz' 6" }}>
+            <h2 className="heading-md text-[#D4AF37] mb-4 md:mb-6">
               HIS LINEAGE & MENTORSHIP
             </h2>
             <p className="font-['Inter'] text-neutral-300 leading-relaxed text-sm md:text-base mb-4">
@@ -66,7 +65,7 @@ export default function About() {
 
         <div className="mb-10 md:mb-16">
           <div className="space-y-4 md:space-y-6">
-            <h2 className="font-['Jaro'] text-[#D4AF37] text-[24px] md:text-[32px] leading-[0.8] mb-4 md:mb-6" style={{ fontVariationSettings: "'opsz' 6" }}>
+            <h2 className="heading-md text-[#D4AF37] mb-4 md:mb-6">
               CRAFT OF COLLABORATION
             </h2>
             <p className="font-['Inter'] text-neutral-300 leading-relaxed text-sm md:text-base mb-4">
@@ -80,7 +79,7 @@ export default function About() {
 
         <div>
           <div className="space-y-4 md:space-y-6">
-            <h2 className="font-['Jaro'] text-[#D4AF37] text-[24px] md:text-[32px] leading-[0.8] mb-4 md:mb-6" style={{ fontVariationSettings: "'opsz' 6" }}>
+            <h2 className="heading-md text-[#D4AF37] mb-4 md:mb-6">
               THE ARCANE APPROACH
             </h2>
             <p className="font-['Inter'] text-neutral-300 leading-relaxed text-sm md:text-base mb-4">
@@ -97,7 +96,7 @@ export default function About() {
         
         <div className="mt-10 md:mt-16 mb-10 md:mb-16">
           <div className="space-y-4 md:space-y-6">
-            <h2 className="font-['Jaro'] text-[#D4AF37] text-[24px] md:text-[32px] leading-[0.8] mb-4 md:mb-6" style={{ fontVariationSettings: "'opsz' 6" }}>
+            <h2 className="heading-md text-[#D4AF37] mb-4 md:mb-6">
               THE LORE BEHIND THE COMPOSITIONS
             </h2>
             <p className="font-['Inter'] text-neutral-300 leading-relaxed text-sm md:text-base mb-4">
@@ -111,7 +110,7 @@ export default function About() {
 
         <div id="contact" className="mt-16 md:mt-24 pt-12 md:pt-16 border-t border-[#3b3b3b]">
           <div className="space-y-8 md:space-y-10">
-            <h2 className="font-['Jaro'] text-white text-[32px] md:text-[48px] leading-[0.8]" style={{ fontVariationSettings: "'opsz' 6" }}>
+            <h2 className="heading-lg text-white">
               CONTACT & CONNECT
             </h2>
 
@@ -126,7 +125,7 @@ export default function About() {
                   <Phone size={20} className="text-neutral-500 group-hover:text-[#D4AF37] transition-colors duration-300" />
                 </div>
                 <div className="text-center">
-                  <p className="font-['Jaro'] text-white text-[13px] tracking-[1.5px] mb-1" style={{ fontVariationSettings: "'opsz' 6" }}>CALL</p>
+                  <p className="action-btn text-white text-[13px] tracking-[1.5px] mb-1"  >CALL</p>
                   <p className="font-['Inter'] text-neutral-500 text-[11px] group-hover:text-neutral-400 transition-colors">+91 96664 85736</p>
                 </div>
               </a>
@@ -142,7 +141,7 @@ export default function About() {
                   <MessageCircle size={20} className="text-neutral-500 group-hover:text-[#D4AF37] transition-colors duration-300" />
                 </div>
                 <div className="text-center">
-                  <p className="font-['Jaro'] text-white text-[13px] tracking-[1.5px] mb-1" style={{ fontVariationSettings: "'opsz' 6" }}>WHATSAPP</p>
+                  <p className="action-btn text-white text-[13px] tracking-[1.5px] mb-1"  >WHATSAPP</p>
                   <p className="font-['Inter'] text-neutral-500 text-[11px] group-hover:text-neutral-400 transition-colors">+91 96664 85736</p>
                 </div>
               </a>
@@ -156,7 +155,7 @@ export default function About() {
                   <Mail size={20} className="text-neutral-500 group-hover:text-[#D4AF37] transition-colors duration-300" />
                 </div>
                 <div className="text-center">
-                  <p className="font-['Jaro'] text-white text-[13px] tracking-[1.5px] mb-1" style={{ fontVariationSettings: "'opsz' 6" }}>EMAIL</p>
+                  <p className="action-btn text-white text-[13px] tracking-[1.5px] mb-1"  >EMAIL</p>
                   <p className="font-['Inter'] text-neutral-500 text-[11px] group-hover:text-neutral-400 transition-colors">composervinnu@gmail.com</p>
                 </div>
               </a>
@@ -172,7 +171,7 @@ export default function About() {
                   <Instagram size={20} className="text-neutral-500 group-hover:text-[#D4AF37] transition-colors duration-300" />
                 </div>
                 <div className="text-center">
-                  <p className="font-['Jaro'] text-white text-[13px] tracking-[1.5px] mb-1" style={{ fontVariationSettings: "'opsz' 6" }}>INSTAGRAM</p>
+                  <p className="action-btn text-white text-[13px] tracking-[1.5px] mb-1"  >INSTAGRAM</p>
                   <p className="font-['Inter'] text-neutral-500 text-[11px] group-hover:text-neutral-400 transition-colors">@v4vinnu</p>
                 </div>
               </a>
@@ -188,7 +187,7 @@ export default function About() {
                   <Clapperboard size={20} className="text-neutral-500 group-hover:text-[#D4AF37] transition-colors duration-300" />
                 </div>
                 <div className="text-center">
-                  <p className="font-['Jaro'] text-white text-[13px] tracking-[1.5px] mb-1" style={{ fontVariationSettings: "'opsz' 6" }}>IMDB</p>
+                  <p className="action-btn text-white text-[13px] tracking-[1.5px] mb-1"  >IMDB</p>
                   <p className="font-['Inter'] text-neutral-500 text-[11px] group-hover:text-neutral-400 transition-colors">View Profile</p>
                 </div>
               </a>
@@ -204,7 +203,7 @@ export default function About() {
                   <MapPin size={20} className="text-neutral-500 group-hover:text-[#D4AF37] transition-colors duration-300" />
                 </div>
                 <div className="text-center">
-                  <p className="font-['Jaro'] text-white text-[13px] tracking-[1.5px] mb-1" style={{ fontVariationSettings: "'opsz' 6" }}>LOCATION</p>
+                  <p className="action-btn text-white text-[13px] tracking-[1.5px] mb-1"  >LOCATION</p>
                   <p className="font-['Inter'] text-neutral-500 text-[11px] group-hover:text-neutral-400 transition-colors">Find on Maps</p>
                 </div>
               </a>

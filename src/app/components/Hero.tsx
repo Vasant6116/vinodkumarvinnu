@@ -26,7 +26,7 @@ export function Hero() {
         <div className="flex flex-col sm:flex-row gap-4">
           <Link 
             to="/discography" 
-            className="relative px-6 sm:px-8 py-3 sm:py-4 font-['Jaro'] text-white hover:bg-white/10 transition-colors text-xs sm:text-sm text-center"
+            className="relative px-6 sm:px-8 py-3 sm:py-4 action-btn text-white hover:bg-white/10 transition-colors text-xs sm:text-sm text-center"
             style={{ fontVariationSettings: "'opsz' 6" }}
           >
             EXPLORE MY WORK
@@ -34,7 +34,7 @@ export function Hero() {
           </Link>
           <Link 
             to="/about" 
-            className="relative px-6 sm:px-8 py-3 sm:py-4 font-['Jaro'] text-white hover:bg-white/10 transition-colors text-xs sm:text-sm text-center"
+            className="relative px-6 sm:px-8 py-3 sm:py-4 action-btn text-white hover:bg-white/10 transition-colors text-xs sm:text-sm text-center"
             style={{ fontVariationSettings: "'opsz' 6" }}
           >
             THE COMPOSER'S CHRONICLE

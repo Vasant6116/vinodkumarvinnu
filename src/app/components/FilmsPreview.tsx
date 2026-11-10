@@ -41,7 +41,7 @@ export function FilmsPreview() {
     <section className="py-12 md:py-20 px-[20px] md:px-[35px]">
       <div className="max-w-[1440px] mx-auto">
         <div className="flex justify-between items-center mb-8 md:mb-12">
-          <h2 className="font-['Jaro'] text-white text-[32px] md:text-[48px] leading-[0.8]" style={{ fontVariationSettings: "'opsz' 6" }}>
+          <h2 className="heading-lg text-white">
             ARCANE CINEMA
           </h2>
           <Link 
@@ -71,7 +71,7 @@ export function FilmsPreview() {
               <div className="absolute inset-0 bg-black/40" />
               
               <div className="absolute top-4 right-4">
-                <span className={`px-3 py-1 rounded-full text-xs font-['Jaro'] ${
+                <span className={`px-3 py-1 rounded-full text-xs card-title ${
                   film.status === 'Upcoming' 
                     ? 'bg-blue-500/80 text-white' 
                     : 'bg-green-500/80 text-white'
@@ -81,7 +81,7 @@ export function FilmsPreview() {
               </div>
               
               <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
-                <p className="font-['Jaro'] text-white text-[28px] leading-[0.8] mb-3" style={{ fontVariationSettings: "'opsz' 6" }}>
+                <p className="card-title text-white text-[28px] leading-[0.8] mb-3" style={{ fontVariationSettings: "'opsz' 6" }}>
                   {film.title.toUpperCase()}
                 </p>
                 <p className="font-['Inter'] text-white leading-[1.5] mb-2 text-sm">
@@ -117,7 +117,7 @@ export function FilmsPreview() {
               <div className="absolute inset-0 bg-black/40" />
               
               <div className="absolute top-6 right-6">
-                <span className={`px-3 py-1 rounded-full text-xs font-['Jaro'] ${
+                <span className={`px-3 py-1 rounded-full text-xs card-title ${
                   film.status === 'Upcoming' 
                     ? 'bg-blue-500/80 text-white' 
                     : 'bg-green-500/80 text-white'
@@ -133,7 +133,7 @@ export function FilmsPreview() {
                     : 'opacity-0 translate-y-4'
                 }`}
               >
-                <p className="font-['Jaro'] text-white text-[40px] leading-[0.8] mb-4" style={{ fontVariationSettings: "'opsz' 6" }}>
+                <p className="card-title text-white text-[40px] leading-[0.8] mb-4" style={{ fontVariationSettings: "'opsz' 6" }}>
                   {film.title.toUpperCase()}
                 </p>
                 <p className="font-['Inter'] text-white leading-[1.5] mb-2">
@@ -149,7 +149,7 @@ export function FilmsPreview() {
                 }`}
               >
                 <div className="text-center px-4">
-                  <p className="font-['Jaro'] text-white text-[28px] leading-[0.9]" style={{ fontVariationSettings: "'opsz' 6" }}>
+                  <p className="card-title text-white text-[28px] leading-[0.9]" style={{ fontVariationSettings: "'opsz' 6" }}>
                     {film.title.toUpperCase()}
                   </p>
                 </div>

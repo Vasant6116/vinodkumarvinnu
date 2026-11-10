@@ -77,7 +77,7 @@ function StoryModal({ release, onClose }: { release: Release; onClose: () => voi
 
           <div className="absolute bottom-5 left-6 right-14">
             <p className="font-['Inter'] text-[10px] uppercase tracking-[1.4px] text-[#D4AF37] mb-1">{release.type} · {release.year}</p>
-            <h2 className="font-['Jaro'] text-white text-[32px] sm:text-[40px] leading-[0.9]" style={{ fontVariationSettings: "'opsz' 6" }}>
+            <h2 className="heading-lg text-white">
               {release.title}
             </h2>
           </div>
@@ -86,7 +86,7 @@ function StoryModal({ release, onClose }: { release: Release; onClose: () => voi
         <div className="px-6 pt-5 pb-8 flex flex-col gap-8">
           {s.story && (
             <section>
-              <h3 className="font-['Jaro'] text-[#D4AF37] text-[18px] mb-3" style={{ fontVariationSettings: "'opsz' 6" }}>
+              <h3 className="heading-sm text-[#D4AF37] mb-3">
                 STORY BEHIND THE COMPOSITION
               </h3>
               <p className="font-['Inter'] text-neutral-300 text-sm leading-relaxed">{s.story}</p>
@@ -95,7 +95,7 @@ function StoryModal({ release, onClose }: { release: Release; onClose: () => voi
 
           {hasProductionDetails && (
             <section>
-              <h3 className="font-['Jaro'] text-[#D4AF37] text-[18px] mb-1" style={{ fontVariationSettings: "'opsz' 6" }}>
+              <h3 className="heading-sm text-[#D4AF37] mb-1">
                 PRODUCTION DETAILS
               </h3>
               <div className="flex flex-col">
@@ -114,7 +114,7 @@ function StoryModal({ release, onClose }: { release: Release; onClose: () => voi
 // ── Main Page Layout ────────────────────────────────────────
 
 export default function Discography() {
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeCategory, setActiveCategory] = useState("Film Albums");
   const [selectedRelease, setSelectedRelease] = useState<Release | null>(null);
   const [storyModalRelease, setStoryModalRelease] = useState<Release | null>(null);
   const [releases, setReleases] = useState<Release[]>([]);
@@ -181,7 +181,7 @@ export default function Discography() {
         
         {/* ── Header & Filters ── */}
         <div className="mb-10">
-          <h1 className="font-['Jaro'] text-white text-[40px] md:text-[64px] leading-[0.8] mb-6" style={{ fontVariationSettings: "'opsz' 6" }}>
+          <h1 className="heading-xl text-white mb-6">
             THE SOUND GRIMOIRE
           </h1>
           <p className="font-['Inter'] text-neutral-400 max-w-2xl leading-relaxed mb-8">

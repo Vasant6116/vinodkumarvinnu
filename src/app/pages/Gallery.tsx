@@ -76,7 +76,7 @@ export default function Gallery() {
         
         {/* ── Header & Filters ── */}
         <div className="mb-10 md:mb-14">
-          <h1 className="font-['Jaro'] text-white text-[40px] md:text-[64px] leading-[0.8] mb-4" style={{ fontVariationSettings: "'opsz' 6" }}>
+          <h1 className="heading-xl text-white mb-4">
             MEMORY VAULT
           </h1>
           <p className="font-['Inter'] text-neutral-400 max-w-2xl leading-relaxed mb-8">
@@ -127,8 +127,7 @@ export default function Gallery() {
               {/* Extended Card Text Area (Solid Background) */}
               <div className="relative bg-[#111] px-5 pb-6 pt-0">
                 <h2 
-                  className="font-['Jaro'] text-white text-[24px] md:text-[28px] leading-tight mb-2" 
-                  style={{ fontVariationSettings: "'opsz' 6" }}
+                  className="heading-md text-white mb-2" 
                 >
                   {memory.title}
                 </h2>
@@ -193,8 +192,7 @@ export default function Gallery() {
             />
             <div className="text-center max-w-3xl">
               <h2 
-                className="font-['Jaro'] text-white text-[32px] md:text-[40px] leading-tight mb-3" 
-                style={{ fontVariationSettings: "'opsz' 6" }}
+                className="heading-lg text-white mb-3" 
               >
                 {filteredMemories[selectedIndex].title}
               </h2>

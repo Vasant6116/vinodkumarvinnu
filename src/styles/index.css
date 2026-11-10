@@ -5,3 +5,33 @@
 @import 'tw-animate-css';
 @import './default_theme.css';
 @import './globals.css';
+
+@layer components {
+  .heading-xl {
+    @apply font-['Jaro'] text-[32px] md:text-[48px] leading-[0.8];
+  }
+
+  .heading-lg {
+    @apply font-['Jaro'] text-[26px] md:text-[24px] leading-[0.8];
+  }
+
+  .heading-md {
+    @apply font-['Jaro'] text-[19px] md:text-[32px] leading-[0.8];
+  }
+
+  .heading-sm {
+    @apply font-['Jaro'] text-[14px];
+  }
+
+  .nav-item {
+    @apply font-['Jaro'] text-[15px];
+  }
+
+  .card-title {
+    @apply font-['Jaro'] text-[18px] md:text-[20px] text-white;
+  }
+
+  .action-btn {
+    @apply font-['Jaro'] text-[13px] md:text-[14px] text-white; 
+  }
+}

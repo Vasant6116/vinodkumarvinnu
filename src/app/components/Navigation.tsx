@@ -20,6 +20,7 @@ export function Navigation() {
     { path: '/about', label: 'The Composer’s Chronicle' },
     { path: '/films', label: 'Arcane Cinema' },
     { path: '/discography', label: 'The Sound Grimoire' },
+    { path: '/audiosphere', label: 'Audiosphere' }, // <-- Added here
     { path: '/gallery', label: 'Memory Vault' },
   ];
 
@@ -34,12 +35,12 @@ export function Navigation() {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`font-['Jaro'] text-[14px] transition-colors ${
+                className={`nav-item text-[14px] transition-colors ${
                   location.pathname === link.path
                     ? 'text-white'
                     : 'text-neutral-400 hover:text-white'
                 }`}
-                style={{ fontVariationSettings: "'opsz' 6" }}
+                  
               >
                 {link.label.toUpperCase()}
               </Link>
@@ -56,7 +57,7 @@ export function Navigation() {
           </button>
 
           {/* Logo/Title for mobile */}
-          <div className="lg:hidden font-['Jaro'] text-white text-[14px]" style={{ fontVariationSettings: "'opsz' 6" }}>
+          <div className="lg:hidden nav-item text-white text-[14px]"   >
             VINOD KUMAR VINNU
           </div>
           
@@ -87,12 +88,12 @@ export function Navigation() {
                   key={link.path}
                   to={link.path}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`font-['Jaro'] text-[14px] px-6 py-4 transition-colors border-b border-[#3b3b3b] last:border-0 ${
+                  className={`nav-item text-[14px] px-6 py-4 transition-colors border-b border-[#3b3b3b] last:border-0 ${
                     location.pathname === link.path
                       ? 'text-white bg-white/5'
                       : 'text-neutral-400 hover:text-white hover:bg-white/5'
                   }`}
-                  style={{ fontVariationSettings: "'opsz' 6" }}
+                    
                 >
                   {link.label.toUpperCase()}
                 </Link>

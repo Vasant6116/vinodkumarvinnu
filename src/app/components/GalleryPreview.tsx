@@ -32,7 +32,7 @@ export function GalleryPreview() {
     <section className="py-12 md:py-20 px-[20px] md:px-[35px]">
       <div className="max-w-[1440px] mx-auto">
         <div className="flex justify-between items-center mb-8 md:mb-12">
-          <h2 className="font-['Jaro'] text-white text-[32px] md:text-[48px] leading-[0.8]" style={{ fontVariationSettings: "'opsz' 6" }}>
+          <h2 className="heading-lg text-white">
             MEMORY VAULT
           </h2>
           <Link 
@@ -61,7 +61,7 @@ export function GalleryPreview() {
               />
               <div className="absolute inset-0 bg-black/50" />
               <div className="absolute inset-0 flex items-center justify-center">
-                <p className="font-['Jaro'] text-white text-[14px] text-center px-2" style={{ fontVariationSettings: "'opsz' 6" }}>
+                <p className="card-title text-white text-[14px] text-center px-2" style={{ fontVariationSettings: "'opsz' 6" }}>
                   {image.title.toUpperCase()}
                 </p>
               </div>
@@ -94,7 +94,7 @@ export function GalleryPreview() {
                   hoveredId === image.id ? 'opacity-100' : 'opacity-0'
                 }`}
               >
-                <p className="font-['Jaro'] text-white text-[32px] leading-[0.8]" style={{ fontVariationSettings: "'opsz' 6" }}>
+                <p className="card-title text-white text-[32px] leading-[0.8]" style={{ fontVariationSettings: "'opsz' 6" }}>
                   {image.title.toUpperCase()}
                 </p>
               </div>
@@ -103,7 +103,7 @@ export function GalleryPreview() {
                   hoveredId === image.id ? 'opacity-0' : 'opacity-100'
                 }`}
               >
-                <p className="font-['Jaro'] text-white text-[20px]" style={{ fontVariationSettings: "'opsz' 6" }}>
+                <p className="card-title text-white text-[20px]" style={{ fontVariationSettings: "'opsz' 6" }}>
                   {image.title.toUpperCase()}
                 </p>
               </div>

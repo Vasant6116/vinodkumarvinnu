@@ -48,7 +48,7 @@ export function DiscographyPreview() {
     <section className="py-12 md:py-20 px-[20px] md:px-[35px]">
       <div className="max-w-[1440px] mx-auto">
         <div className="flex justify-between items-center mb-8 md:mb-12">
-          <h2 className="font-['Jaro'] text-white text-[32px] md:text-[48px] leading-[0.8]" style={{ fontVariationSettings: "'opsz' 6" }}>
+          <h2 className="heading-lg text-white">
             THE SOUND GRIMOIRE
           </h2>
           <Link 
@@ -77,7 +77,7 @@ export function DiscographyPreview() {
               />
               <div className="absolute inset-0 bg-black/50" />
               <div className="absolute inset-0 flex flex-col justify-center px-3">
-                <p className="font-['Jaro'] text-white text-[16px] leading-[0.9] mb-2" style={{ fontVariationSettings: "'opsz' 6" }}>
+                <p className="card-title text-white text-[16px] leading-[0.9] mb-2" style={{ fontVariationSettings: "'opsz' 6" }}>
                   {release.title.toUpperCase()}
                 </p>
                 <p className="font-['Inter'] text-white/90 text-[10px] mb-1">
@@ -116,7 +116,7 @@ export function DiscographyPreview() {
                   hoveredId === release.id ? 'opacity-100' : 'opacity-0'
                 }`}
               >
-                <p className="font-['Jaro'] text-white text-[32px] leading-[0.8] mb-3" style={{ fontVariationSettings: "'opsz' 6" }}>
+                <p className="card-title text-white text-[32px] leading-[0.8] mb-3" style={{ fontVariationSettings: "'opsz' 6" }}>
                   {release.title.toUpperCase()}
                 </p>
                 <p className="font-['Inter'] text-white/90 text-sm mb-1">
@@ -131,7 +131,7 @@ export function DiscographyPreview() {
                   hoveredId === release.id ? 'opacity-0' : 'opacity-100'
                 }`}
               >
-                <p className="font-['Jaro'] text-white text-[20px]" style={{ fontVariationSettings: "'opsz' 6" }}>
+                <p className="card-title text-white text-[20px]" style={{ fontVariationSettings: "'opsz' 6" }}>
                   {release.title.toUpperCase()}
                 </p>
               </div>

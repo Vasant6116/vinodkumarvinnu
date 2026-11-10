@@ -16,6 +16,7 @@ import Gallery from "./pages/Gallery";
 import About from "./pages/About";
 import { PlayerProvider } from "./context/PlayerContext";
 import { GlobalPlayer } from "./components/GlobalPlayer";
+import Audiosphere from './pages/Audiosphere'; // Update path based on where you saved it
 
 function HomePage() {
   return (
@@ -45,6 +46,7 @@ export default function App() {
             element={<Discography />}
           />
           <Route path="/gallery" element={<Gallery />} />
+          <Route path="/audiosphere" element={<Audiosphere />} />
         </Routes>
         <footer className="bg-[#000407] text-neutral-500 py-8 md:py-12 border-t border-[#3b3b3b]">
           <div className="max-w-[1440px] mx-auto px-[20px] md:px-[35px] text-center">

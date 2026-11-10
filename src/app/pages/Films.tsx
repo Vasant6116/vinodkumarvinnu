@@ -25,7 +25,7 @@ function FilmDetailView({ film, onBack }: { film: any, onBack: () => void }) {
         </div>
         
         <div className="lg:col-span-7 flex flex-col justify-center">
-          <h1 className="font-['Jaro'] text-white text-[48px] md:text-[80px] leading-[0.8] mb-6" style={{ fontVariationSettings: "'opsz' 6" }}>
+          <h1 className="heading-xl text-white mb-6">
             {film.title.toUpperCase()}
           </h1>
           
@@ -42,19 +42,19 @@ function FilmDetailView({ film, onBack }: { film: any, onBack: () => void }) {
             <div className="grid grid-cols-2 gap-6 pt-6 border-t border-[#3b3b3b]">
               {film.director && (
                 <div>
-                  <h4 className="text-[#D4AF37] font-['Jaro'] mb-1">DIRECTOR</h4>
+                  <h4 className="text-[#D4AF37] font-['Fondamento'] mb-1">DIRECTOR</h4>
                   <p>{film.director}</p>
                 </div>
               )}
               {film.story && (
                 <div>
-                  <h4 className="text-[#D4AF37] font-['Jaro'] mb-1">STORY</h4>
+                  <h4 className="text-[#D4AF37] font-['Fondamento'] mb-1">STORY</h4>
                   <p>{film.story}</p>
                 </div>
               )}
               {film.producer && (
                 <div>
-                  <h4 className="text-[#D4AF37] font-['Jaro'] mb-1">PRODUCER</h4>
+                  <h4 className="text-[#D4AF37] font-['Fondamento'] mb-1">PRODUCER</h4>
                   <p>{film.producer}</p>
                 </div>
               )}
@@ -62,7 +62,7 @@ function FilmDetailView({ film, onBack }: { film: any, onBack: () => void }) {
 
             {film.aboutComposition && (
               <div className="pt-6 border-t border-[#3b3b3b]">
-                <h4 className="text-[#D4AF37] font-['Jaro'] text-xl mb-3">STORY BEHIND THE COMPOSITION</h4>
+                <h4 className="text-[#D4AF37] font-['Fondamento'] text-xl mb-3">STORY BEHIND THE COMPOSITION</h4>
                 <p className="leading-relaxed">{film.aboutComposition}</p>
               </div>
             )}
@@ -364,7 +364,7 @@ export default function Films() {
         ) : (
           <>
         <div className="mb-8 md:mb-12">
-          <h1 className="font-['Jaro'] text-white text-[40px] md:text-[64px] leading-[0.8] mb-4 md:mb-6" style={{ fontVariationSettings: "'opsz' 6" }}>
+          <h1 className="heading-xl text-white mb-4 md:mb-6">
             ARCANE CINEMA
           </h1>
           <p className="font-['Inter'] text-neutral-400 max-w-2xl leading-relaxed text-sm md:text-base">
@@ -374,7 +374,7 @@ export default function Films() {
 
         {/* Released Films Section */}
         <div className="mb-12 md:mb-20">
-          <h2 className="font-['Jaro'] text-white text-[28px] md:text-[40px] leading-[0.8] mb-6 md:mb-8" style={{ fontVariationSettings: "'opsz' 6" }}>
+          <h2 className="heading-lg text-white mb-6 md:mb-8">
             RELEASED FILMS
           </h2>
           
@@ -454,7 +454,7 @@ export default function Films() {
           {/* Details Below Carousel */}
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-6">
-              <h3 className="font-['Jaro'] text-white text-[24px] md:text-[32px] leading-[0.9] mb-4" style={{ fontVariationSettings: "'opsz' 6" }}>
+              <h3 className="heading-md text-white mb-4">
                 {releasedFilms[currentReleasedIndex].title.toUpperCase()}
               </h3>
               <div className="flex items-center justify-center gap-4 font-['Inter'] text-neutral-400 text-sm mb-4 flex-wrap">
@@ -501,7 +501,7 @@ export default function Films() {
 
         {/* Upcoming Films Section */}
         <div>
-          <h2 className="font-['Jaro'] text-white text-[28px] md:text-[40px] leading-[0.8] mb-6 md:mb-8" style={{ fontVariationSettings: "'opsz' 6" }}>
+          <h2 className="heading-lg text-white mb-6 md:mb-8">
             UPCOMING FILMS
           </h2>
           
@@ -571,7 +571,7 @@ export default function Films() {
 
           {/* Details Below Carousel */}
           <div className="text-center max-w-2xl mx-auto">
-            <h3 className="font-['Jaro'] text-white text-[24px] md:text-[32px] leading-[0.9] mb-4" style={{ fontVariationSettings: "'opsz' 6" }}>
+            <h3 className="heading-md text-white mb-4">
               {upcomingFilms[currentUpcomingIndex].title.toUpperCase()}
             </h3>
             <p className="font-['Inter'] text-white mb-2 text-sm md:text-base">
